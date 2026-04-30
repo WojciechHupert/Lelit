@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lelit Distrikt 2 | Sentient MetaHumans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e67e22; /* Terracotta Sun */
+            --secondary: #2c3e50; /* Mediterranean Night */
+            --accent: #3498db; /* AI Blue */
+            --bg: #0f141a;
+            --text: #f4f1ea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2 { font-family: 'Playfair Display', serif; }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(15, 20, 26, 0.7), rgba(15, 20, 26, 0.7)), 
+                        url('https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=1920&q=80'); /* Scenic Placeholder */
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            margin-bottom: 20px;
+            font-style: italic;
+            letter-spacing: -2px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding: 80px 10%;
+            background: #161d26;
+        }
+
+        .feature-card {
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .feature-card h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .multimodal-section {
+            padding: 100px 10%;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 60px;
+        }
+
+        .visual-demo {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .vision-circle {
+            width: 100%;
+            aspect-ratio: 1;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 4s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4); }
+            70% { box-shadow: 0 0 0 30px rgba(52, 152, 219, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+        }
+
+        .copy-section {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .copy-section h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 6px 15px;
+            background: var(--secondary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        footer {
+            padding: 60px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #555;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 18px 40px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <p>A Sentient MetaHuman Experience</p>
+            <h1>Lelit Distrikt 2</h1>
+            <a href="#discover" class="cta-btn">Enter the District</a>
+        </div>
+    </section>
+
+    <section id="discover" class="ai-grid">
+        <div class="feature-card">
+            <span class="icon">🧠</span>
+            <h2>Gemma 4 Private Brain</h2>
+            <p>100% Local. 100% Private. No cloud latency. Auggie thinks in three dimensions using high-reasoning local LLMs.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon">👁️</span>
+            <h2>Multimodal Eyes</h2>
+            <p>Auggie doesn't just hear you. He sees your MetaHuman, your choices, and the environment through C++ scene capture.</p>
+        </div>
+        <div class="feature-card">
+            <span class="icon">🎙️</span>
+            <h2>Natural Voice</h2>
+            <p>Powered by Kokoro TTS and Whisper STT. Hold 'C' to talk as if you were standing on a Mediterranean balcony.</p>
+        </div>
+    </section>
+
+    <section class="multimodal-section">
+        <div class="visual-demo">
+            <div class="vision-circle">
+                <div style="text-align: center;">
+                    <span style="font-size: 0.8rem; opacity: 0.6; text-transform: uppercase;">Auggie Vision</span><br>
+                    <span style="color: var(--accent); font-weight: bold;">256px Capture</span>
+                </div>
+            </div>
+        </div>
+        <div class="copy-section">
+            <span class="tag-pill">Unreal Engine 5.7</span>
+            <h2>Conversation is no longer a script.</h2>
+            <p>In Lelit Distrikt 2, the NPCs remember you. Every interaction is distilled into a persistent SQLite memory, creating a shared history that evolves over months of gameplay. This is the end of the "Hello Traveller" era.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Lelit Distrikt 2 &copy; 2026. Powered by Local AI Multimodal Technology.</p>
+        <p style="margin-top: 10px; font-style: italic;">"The world is silent until we speak." - Auggie</p>
+    </footer>
+
+</body>
+</html>

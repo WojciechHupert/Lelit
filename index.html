@@ -1,188 +1,731 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Deep Dive: Verta Lattice</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #121212; /* Even darker background */
-            color: #e2e8f0; /* Light text */
-            /* Subtle background pattern to evoke a futuristic/stacked feel */
-            background-image: radial-gradient(at 50% 0%, rgba(29, 78, 216, 0.1) 0%, transparent 70%),
-                              radial-gradient(at 10% 90%, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
-            background-attachment: fixed;
-        }
-        /* Custom scrollbar for better aesthetics */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #2d3748; /* Darker track */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4a5568; /* Grey thumb */
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; /* Lighter grey on hover */
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lelit Distrikt</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+    :root{--cream:#f5f0e8;--parchment:#ede5d4;--stone:#c4b99a;--terracotta:#b5693a;--shadow:#2a2118;--ink:#1a1510;--dust:#7a6e5f}
+    *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+    body{background-color:var(--ink);color:var(--cream);font-family:'Inter',sans-serif;font-weight:300;font-size:16px;line-height:1.7;overflow-x:hidden}
+    .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;background:radial-gradient(ellipse at 50% 0%,rgba(181,105,58,.18) 0%,transparent 65%),radial-gradient(ellipse at 20% 80%,rgba(196,185,154,.08) 0%,transparent 50%),var(--ink)}
+    .hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(196,185,154,.03) 60px,rgba(196,185,154,.03) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(196,185,154,.03) 60px,rgba(196,185,154,.03) 61px);pointer-events:none}
+    .hero-eyebrow{font-size:.7rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--terracotta);margin-bottom:2rem}
+    .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,12vw,9rem);font-weight:300;line-height:.95;color:var(--cream);margin-bottom:.15em}
+    .hero h1 em{font-style:italic;color:var(--stone)}
+    .hero-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,2.5vw,1.5rem);color:var(--stone);max-width:520px;margin:2rem auto 3rem;line-height:1.5}
+    .hero-cta{display:inline-block;border:1px solid var(--terracotta);color:var(--terracotta);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;padding:1rem 2.5rem;transition:background .3s,color .3s}
+    .hero-cta:hover{background:var(--terracotta);color:var(--ink)}
+    .scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--dust);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase}
+    .scroll-hint::after{content:'';display:block;width:1px;height:40px;background:linear-gradient(to bottom,var(--dust),transparent)}
+    section{padding:7rem 2rem;max-width:1100px;margin:0 auto}
+    .section-label{font-size:.65rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--terracotta);margin-bottom:1.5rem}
+    h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.5rem);font-weight:300;line-height:1.1;color:var(--cream);margin-bottom:1.5rem}
+    h2 em{font-style:italic;color:var(--stone)}
+    p{color:var(--stone);max-width:620px;margin-bottom:1.2rem;font-size:1rem}
+    .divider{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(196,185,154,.2),transparent)}
+    .enclosure{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;padding:7rem 2rem;max-width:1100px;margin:0 auto}
+    .features{background:linear-gradient(to bottom,transparent,rgba(196,185,154,.04),transparent);padding:7rem 2rem}
+    .features-inner{max-width:1100px;margin:0 auto}
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:3rem;margin-top:4rem}
+    .feature-card{border-top:1px solid rgba(196,185,154,.15);padding-top:2rem}
+    .feature-number{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:rgba(181,105,58,.25);line-height:1;margin-bottom:1rem}
+    .feature-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--cream);margin-bottom:.75rem}
+    .feature-card p{font-size:.9rem;max-width:none}
+    .auggie-section{padding:7rem 2rem;max-width:1100px;margin:0 auto}
+    .auggie-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.4rem,3vw,2rem);color:var(--cream);line-height:1.4;border-left:2px solid var(--terracotta);padding-left:2rem;margin:3rem 0;max-width:700px}
+    .auggie-traits{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem}
+    .trait{display:flex;align-items:baseline;gap:.75rem;font-size:.9rem;color:var(--stone);max-width:620px}
+    .trait-mark{color:var(--terracotta);font-size:.6rem;flex-shrink:0}.trait strong{color:var(--cream);font-weight:400}
+    .threads-section{padding:7rem 2rem;max-width:1100px;margin:0 auto}
+    .threads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;background:rgba(196,185,154,.08);margin-top:4rem}
+    .thread-card{background:var(--ink);padding:2.5rem 2rem}
+    .thread-card h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--cream);margin-bottom:.75rem}
+    .thread-card p{font-size:.88rem;max-width:none;margin:0}
+    .world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,185,154,.1);margin-top:4rem}
+    .world-cell{background:var(--ink);padding:2rem 2rem 2.5rem;text-align:center}
+    .world-cell h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--cream);margin-bottom:.5rem}
+    .world-cell p{font-size:.85rem;max-width:none;margin:0}
+    .comms-section{background:linear-gradient(135deg,rgba(181,105,58,.06) 0%,transparent 60%);padding:7rem 2rem}
+    .comms-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .cast-section{padding:7rem 2rem;max-width:1100px;margin:0 auto}
+    .cast-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;background:rgba(196,185,154,.08);margin-top:4rem}
+    .cast-card{background:var(--ink);padding:0}
+    .cast-card-body{padding:1.5rem 1.75rem 2rem}
+    .cast-role{font-size:.6rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--terracotta);margin-bottom:.75rem}
+    .cast-card h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;color:var(--cream);margin-bottom:.6rem}
+    .cast-card p{font-size:.85rem;max-width:none;margin:0}
+    .refs-section{background:linear-gradient(to bottom,transparent,rgba(196,185,154,.03),transparent);padding:7rem 2rem}
+    .refs-inner{max-width:1100px;margin:0 auto}
+    .refs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:3rem;margin-top:4rem}
+    .ref-item{border-top:1px solid rgba(196,185,154,.12);padding-top:1.5rem}
+    .ref-item h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--cream);margin-bottom:.4rem}
+    .ref-year{font-size:.65rem;letter-spacing:.2em;color:var(--terracotta);margin-bottom:.75rem}
+    .ref-item p{font-size:.85rem;max-width:none;margin:0}
+    .specs-section{padding:7rem 2rem;max-width:1100px;margin:0 auto}
+    .specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:4rem}
+    .spec-group h4{font-size:.65rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--terracotta);margin-bottom:1.5rem}
+    .spec-row{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid rgba(196,185,154,.08);padding:.75rem 0;font-size:.9rem}
+    .spec-row .spec-label{color:var(--dust)}.spec-row .spec-value{color:var(--cream)}
+    footer{border-top:1px solid rgba(196,185,154,.1);padding:3rem 2rem;text-align:center;color:var(--dust);font-size:.8rem;letter-spacing:.05em}
+    footer .footer-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--stone);margin-bottom:.5rem}
 
-        /* Custom glow effect for headings */
-        .text-glow {
-            text-shadow: 0 0 8px rgba(139, 92, 246, 0.6), 0 0 15px rgba(236, 72, 153, 0.4);
-        }
+    /* Image placeholders */
+    .img-ph{width:100%;background:rgba(196,185,154,.07);border:1px dashed rgba(196,185,154,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem}
+    .img-ph-icon{font-size:2rem;opacity:.2;color:var(--stone)}
+    .img-ph-label{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dust);text-align:center}
+    .img-banner .img-ph{min-height:380px}
+    .world-cell-img .img-ph{min-height:140px}
+    .auggie-float{float:right;width:38%;margin:0 0 2rem 3rem}
+    .auggie-float .img-ph{padding-top:120%}
+        .cast-portrait .img-ph{padding-top:100%}
+    .cast-portrait { position: relative; }
+    .placeholder-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      pointer-events: none;
+      z-index: 10;
+      border-radius: 4px;
+    }
 
-        /* Custom card hover effect */
-        .card-hover-effect:hover {
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(139, 92, 246, 0.4);
-            border-color: #8b5cf6; /* Purple border on hover */
-        }
-    </style>
+    .enclosure-img .img-ph{min-height:380px}
+
+    /* Interstitials */
+    .interstitial{padding:5rem 2rem;text-align:center}
+    .it-terracotta{background:var(--terracotta)}
+    .it-parchment{background:var(--parchment)}
+    .it-stone{background:var(--stone)}
+    .it-label{font-size:.65rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;margin-bottom:1rem;opacity:.6;color:var(--ink)}
+    .it-terracotta .it-label{color:var(--cream);opacity:.7}
+    .it-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:300;line-height:1.2;color:var(--ink)}
+    .it-terracotta .it-headline{color:var(--cream)}
+
+    /* WhatsApp phone mockup */
+    .phone-slideshow{display:flex;flex-direction:column;align-items:center;gap:2rem}
+    .phone-track{position:relative;width:300px;height:590px}
+    .phone-screen{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .4s ease}
+    .phone-screen.active{opacity:1;pointer-events:auto}
+    .phone-frame{width:300px;height:590px;background:#ECE5DD;border-radius:38px;border:8px solid #0d0d0d;overflow:hidden;box-shadow:0 28px 72px rgba(0,0,0,.65);display:flex;flex-direction:column;position:relative}
+    .phone-frame::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:80px;height:6px;background:#0d0d0d;border-radius:0 0 6px 6px;z-index:10}
+    .wa-header{background:#075E54;padding:.8rem 1rem .8rem;display:flex;align-items:center;gap:.75rem;flex-shrink:0;padding-top:1.2rem}
+    .wa-avatar{width:34px;height:34px;border-radius:50%;background:#128C7E;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;color:#fff;flex-shrink:0;font-weight:600}
+    .wa-contact{display:flex;flex-direction:column}
+    .wa-name{font-size:.78rem;font-weight:600;color:#fff;line-height:1.2}
+    .wa-status{font-size:.58rem;color:rgba(255,255,255,.7)}
+    .wa-chat{flex:1;overflow-y:auto;padding:.6rem .5rem;display:flex;flex-direction:column;gap:.35rem}
+    .wa-date-label{text-align:center;font-size:.55rem;color:#777;background:rgba(255,255,255,.75);border-radius:8px;padding:.2rem .7rem;margin:.2rem auto .4rem;display:inline-block;align-self:center}
+    .wa-msg{max-width:82%;padding:.45rem .7rem .3rem;border-radius:7px;position:relative}
+    .wa-recv{background:#fff;align-self:flex-start;border-top-left-radius:0}
+    .wa-sent{background:#DCF8C6;align-self:flex-end;border-top-right-radius:0}
+    .wa-msg p{margin:0;font-family:'Inter',sans-serif;font-size:.7rem;line-height:1.45;color:#111}
+    .wa-msg em{font-style:italic}
+    .wa-time{display:block;font-size:.52rem;color:#999;text-align:right;margin-top:.15rem}
+    .wa-ticks{color:#53bdeb}
+    .wa-input-bar{background:#F0F0F0;border-top:1px solid #ddd;padding:.45rem .6rem;display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+    .wa-input-field{flex:1;background:#fff;border-radius:20px;padding:.3rem .7rem;font-size:.65rem;color:#aaa;font-family:'Inter',sans-serif}
+    .wa-send{width:30px;height:30px;background:#128C7E;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem}
+    .slideshow-controls{display:flex;align-items:center;gap:1.5rem}
+    .slide-btn{background:none;border:1px solid rgba(196,185,154,.3);color:var(--stone);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;transition:border-color .2s,color .2s;line-height:1}
+    .slide-btn:hover{border-color:var(--terracotta);color:var(--terracotta)}
+    .slide-dots{display:flex;gap:.6rem}
+    .dot{width:8px;height:8px;border-radius:50%;background:rgba(196,185,154,.25);cursor:pointer;transition:background .2s}
+    .dot.active{background:var(--terracotta)}
+
+    /* CTA */
+    .cta-section{padding:9rem 2rem;max-width:900px;margin:0 auto;text-align:center}
+    .cta-section h2{margin-bottom:2rem}
+    .cta-statement{max-width:540px;margin:0 auto 3.5rem;font-size:1rem;color:var(--stone)}
+    .cta-button{display:inline-block;border:1px solid var(--terracotta);color:var(--terracotta);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;padding:1.1rem 3.5rem;transition:background .3s,color .3s}
+    .cta-button:hover{background:var(--terracotta);color:var(--ink)}
+
+    @media(max-width:768px){
+      .enclosure{grid-template-columns:1fr;gap:3rem}
+      .comms-inner{grid-template-columns:1fr;gap:3rem}
+      .specs-grid{grid-template-columns:1fr;gap:2rem}
+      .world-grid{grid-template-columns:1fr}
+      .auggie-float{float:none;width:100%;margin:0 0 2rem 0}
+      .phone-track{width:280px;height:550px}
+      .phone-frame{width:280px;height:550px}
+    }
+  
+    /* --- Custom Cursor --- */
+    body, a, button, .slide-btn, .dot, .wa-send, .hero-cta, .cta-button { cursor: none; }
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--terracotta);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, mix-blend-mode 0.3s ease;
+      mix-blend-mode: normal;
+    }
+    .custom-cursor.hovered {
+      width: 60px;
+      height: 60px;
+      background: var(--cream);
+      mix-blend-mode: difference;
+    }
+
+    /* --- Quotes --- */
+    .quote-interstitial {
+      padding: 8rem 2rem;
+      text-align: center;
+      background: rgba(196,185,154,.02);
+      border-top: 1px solid rgba(196,185,154,.08);
+      border-bottom: 1px solid rgba(196,185,154,.08);
+    }
+    .quote-interstitial h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--stone);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.3;
+    }
+    
+    
+    
+    /* --- Scroll Reveal Base --- */
+    .reveal { visibility: hidden; }
+
+    /* --- Magnetic Elements --- */
+    .hero-cta, .cta-button {
+      transition: transform 0.1s ease-out, background .3s, color .3s;
+    }
+
+  </style>
 </head>
-<body class="antialiased">
-    <div class="container mx-auto px-4 py-12 md:py-16 lg:py-20">
+<body>
+  <div class="custom-cursor"></div>
 
-        <!-- Homepage Hero Section -->
-        <header class="text-center mb-16">
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-4 text-glow">
-                A World with a Million Windows, but No Doors.
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-6">
-                Welcome to The Deep Dive, an exploration into the heart of the human condition.
-                We peel back the layers of everyday life—the mundane, the digital, the tangible—to uncover the profound truths they hold about who we are. This project is a fusion of two worlds: a series of intimate, philosophical monologues and an interactive journey into the sprawling vertical city of Verta-Lattice.
-            </p>
-            <div class="italic text-gray-400 text-lg max-w-3xl mx-auto">
-                What is the weight of your own self-imposed cage? How do you find what’s real when you’re surrounded by echoes?
-            </div>
-            <p class="text-2xl text-pink-300 mt-6">
-                Your story is here. It's time to dive in.
-            </p>
-        </header>
+  <!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+  <header class="hero">
+    <p class="reveal hero-eyebrow">A world that runs without you. A guide who remembers.</p>
+    <h1>Lelit<br><em>Distrikt</em></h1>
+    <p class="reveal hero-subtitle">A sealed dome above a charming Mediterranean town. The people inside believe it is real life. You know it isn&#x27;t.</p>
+    <a href="#about" class="hero-cta">Enter the District</a>
+    <div class="scroll-hint">Scroll</div>
+  </header>
 
-        <!-- About the Project Section -->
-        <section class="mb-16 bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
-            <h2 class="text-3xl md:text-4xl font-bold text-purple-300 mb-6 text-center text-glow">
-                Two Worlds, One Truth
-            </h2>
-            <p class="text-lg text-gray-300 leading-relaxed mb-6">
-                This project is a unique combination of reflection and immersion.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600">
-                    <h3 class="text-xl font-semibold text-pink-300 mb-2">The Monologues</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed">
-                        A collection of sharp, poignant observations on the overlooked corners of modern life. From the silent tyranny of a notification dot to the quiet history of a scuff mark on the floor, these reflections challenge us to see our own lives with fresh eyes. They find the poetry in our default settings, the weight in our keys, and the loneliness in our digital oracles.
-                    </p>
-                </div>
-                <div class="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600">
-                    <h3 class="text-xl font-semibold text-pink-300 mb-2">The Experience</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed">
-                        Transports you to Verta-Lattice, an incredible, entirely vertical world. It is a city stacked upon itself—a chaotic yet harmonious architectural marvel where homes, shops, and lives are slotted together in a giant, intricate frame. Through the eyes of its residents, we see how universal human themes are amplified, distorted, and illuminated by the unique pressures of their environment.
-                    </p>
-                </div>
-            </div>
-            <p class="text-lg text-gray-300 leading-relaxed mt-8 text-center">
-                Together, these two halves of the project ask a central question: How do our physical and digital spaces shape our search for connection, authenticity, and meaning?
-            </p>
-        </section>
+  <div class="divider"></div>
 
-        <!-- Verta-Lattice World Section -->
-        <section class="mb-16 bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
-            <h2 class="text-3xl md:text-4xl font-bold text-purple-300 mb-6 text-center text-glow">
-                Welcome to Verta-Lattice
-            </h2>
-            <p class="text-lg text-gray-300 leading-relaxed mb-4">
-                Known to its residents by many names—The Vert, The Patchwork, The Frame—Verta-Lattice is a world unto itself.
-            </p>
-            <p class="text-lg text-gray-300 leading-relaxed mb-4">
-                Imagine a city that doesn't spread out, but climbs. Dwellings are interlocked, communal spaces are stacked, and the sky is a concept seen through the gaps in the structure above. For many, it is the only home they’ve ever known.
-            </p>
-            <p class="text-lg text-gray-300 leading-relaxed mb-4">
-                Life here is a dense tapestry of shared sounds, overlapping spaces, and constant, visible proximity. But in a world so tightly woven, does closeness guarantee connection? Verta-Lattice is the ultimate testing ground for our most fundamental needs: for privacy and community, for individuality and belonging.
-            </p>
-        </section>
+  <!-- ══ HERO IMAGE ═════════════════════════════════════════════════════════ -->
+  <div class="img-banner">
+    <img src="assets/img/street_level.png" alt="District Establishing Shot" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-radius: 4px;" class="reveal">
+  </div>
 
-        <!-- Characters Section -->
-        <section class="mb-16 bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
-            <h2 class="text-3xl md:text-4xl font-bold text-pink-400 mb-6 text-center text-glow">
-                Meet the Residents of the Lattice
-            </h2>
-            <p class="text-lg text-gray-300 leading-relaxed mb-8 text-center">
-                The stories of Verta-Lattice unfold through the lives of its key inhabitants. Each one embodies a different way of seeing, connecting, and surviving in this vertical reality.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Elias Card -->
-                <div class="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 card-hover-effect">
-                    <img src="Elias.png" alt="Elias" class="w-full h-48 object-cover rounded-lg mb-4 shadow-md">
-                    <h3 class="text-xl font-semibold text-purple-300 mb-2">Elias, The Curator</h3>
-                    <p class="text-gray-400 text-sm italic mb-4">The keeper of memory.</p>
-                    <p class="text-gray-300 leading-relaxed text-sm">
-                        He runs the "Museum of the Cube," preserving the cultural heritage of Verta-Lattice through its discarded objects—bent keys, old intercoms, forgotten shopping lists. He reminds us that our history is written in the tangible.
-                    </p>
-                </div>
-                <!-- Lyra Card -->
-                <div class="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 card-hover-effect">
-                    <img src="Lyra.png" alt="Lyra" class="w-full h-48 object-cover rounded-lg mb-4 shadow-md">
-                    <h3 class="text-xl font-semibold text-purple-300 mb-2">Lyra, The Cozy Girl</h3>
-                    <p class="text-gray-400 text-sm italic mb-4">The ultimate observer.</p>
-                    <p class="text-gray-300 leading-relaxed text-sm">
-                        From her window, she pieces together the lives of others, inventing stories for the silent films she sees playing out across the way. She is a ghost watching the world of the living, embodying our deep-seated desire to see and be seen.
-                    </p>
-                </div>
-                <!-- Cosmo Chris Card -->
-                <div class="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 card-hover-effect">
-                    <img src="Cosmo_Chris.png" alt="Cosmo Chris" class="w-full h-48 object-cover rounded-lg mb-4 shadow-md">
-                    <h3 class="text-xl font-semibold text-purple-300 mb-2">Cosmo Chris, The DJ</h3>
-                    <p class="text-gray-400 text-sm italic mb-4">The philosophical voice.</p>
-                    <p class="text-gray-300 leading-relaxed text-sm">
-                        His broadcast, "Radio Free Cube," is the unofficial pulse of the city. He is a connector who uses sound and shared thought to bridge the gaps between the isolated souls of the Lattice.
-                    </p>
-                </div>
-                <!-- Sal Card -->
-                <div class="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 card-hover-effect">
-                    <img src="Sal.png" alt="Sal" class="w-full h-48 object-cover rounded-lg mb-4 shadow-md">
-                    <h3 class="text-xl font-semibold text-purple-300 mb-2">Sal, The Clerk</h3>
-                    <p class="text-gray-400 text-sm italic mb-4">The human anchor.</p>
-                    <p class="text-gray-300 leading-relaxed text-sm">
-                        His corner shop, The Nook, is the physical heart and soul of the community—a hub of rumors, secrets, and genuine, face-to-face interaction. He deals in the currency of everyday needs and human connection.
-                    </p>
-                </div>
-                <!-- Kale Card -->
-                <div class="bg-gray-700 p-6 rounded-lg shadow-md border border-gray-600 card-hover-effect">
-                    <img src="Kael.png" alt="Kael" class="w-full h-48 object-cover rounded-lg mb-4 shadow-md">
-                    <h3 class="text-xl font-semibold text-purple-300 mb-2">Kale, The Traveler</h3>
-                    <p class="text-gray-400 text-sm italic mb-4">The mysterious outsider.</p>
-                    <p class="text-gray-300 leading-relaxed text-sm">
-                        A living reminder that there is a world beyond the frame, Kale carries stories of the outside and embodies the call of the unknown, adventure, and physical exploration.
-                    </p>
-                </div>
-            </div>
-        </section>
+  <div class="divider"></div>
 
-        <!-- Call to Action / Final Section -->
-        <section class="text-center bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700">
-            <h2 class="text-3xl md:text-4xl font-bold text-pink-400 mb-6 text-glow">
-                Your Deep Dive Awaits
-            </h2>
-            <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-8">
-                This project is more than a story; it's a mirror. As you explore the layers of Verta-Lattice and the insights of the monologues, we invite you to look at your own world.
-            </p>
-            <div class="text-left text-gray-300 text-lg max-w-3xl mx-auto mb-8 space-y-4">
-                <p>What are your "default settings," and do you have the courage to uncheck them?</p>
-                <p>How do you tell the difference between a genuine connection and a bloodless echo?</p>
-                <p>In a world that demands your constant attention, where do you find your moments of quiet, honest truth?</p>
-            </div>
-            <a href="#" class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition-transform duration-300">
-                Begin your journey. Explore the layers.
-            </a>
-        </section>
-
+  <!-- ══ WHAT IS THIS: THE WORLD ═══════════════════════════════════════════ -->
+  <div class="enclosure" id="about">
+    <div>
+      <p class="reveal section-label">The World</p>
+      <h2 class="reveal">A town built to<br><em>remember the past</em></h2>
+      <p class="reveal" style="font-size: 1.1rem; color: var(--cream);">In a peaceful, sealed dome above a charming Mediterranean town, the people go to work, argue over small things, and fall in love. The sky is a projection. The horizon never arrives.</p>
+      <p class="reveal">The residents believe it is real life. You know it isn't. The Lelit Distrikt is a post-apocalyptic social experiment built to preserve a particular way of being human together.</p>
+      <p class="reveal">Your guide is Auggie—the only person who shares your secret. Talk to him naturally. Ask him anything. He will remember. <strong>An artificial town. A genuine connection.</strong></p>
     </div>
+    <div class="enclosure-img">
+      <div class="reveal img-ph" aria-label="Image: view of the dome or district skyline">
+        <span class="img-ph-icon">&#9634;</span>
+        <span class="img-ph-label">The dome / district skyline</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ HOW IT WORKS: FEATURES ════════════════════════════════════════════ -->
+  <div class="features">
+    <div class="features-inner">
+      <p class="reveal section-label">What This Is</p>
+      <h2 class="reveal">The end of the<br><em>"Hello Traveler" era.</em></h2>
+      <div class="features-grid">
+        <div class="reveal feature-card">
+          <div class="feature-number">01</div>
+          <h3>Conversation is the Mechanic</h3>
+          <p class="reveal">There are no quest markers, no objectives, no combat. You talk to people. They remember. The stories you find depend entirely on who you return to, what you ask, and how long you stay.</p>
+        </div>
+        <div class="reveal feature-card">
+          <div class="feature-number">02</div>
+          <h3>Characters Who Know Each Other</h3>
+          <p class="reveal">Every resident has a private history, ongoing relationships, and things they have never told anyone. What you tell one person, another may already know. Information travels through the district the way gossip travels in a real town.</p>
+        </div>
+        <div class="reveal feature-card">
+          <div class="feature-number">03</div>
+          <h3>The World Runs Without You</h3>
+          <p class="reveal">The day/night cycle continues when you leave. People go home. Things happen. When you return you are catching up, not starting over. The district has been alive in your absence.</p>
+        </div>
+        <div class="reveal feature-card">
+          <div class="feature-number">04</div>
+          <h3>A Guide Who Tells You the Truth</h3>
+          <p class="reveal">Auggie is the only person in the district who knows what it really is. He is your anchor, your narrator, and the only person you can speak honestly with. He also has a secret of his own.</p>
+        </div>
+        <div class="reveal feature-card">
+          <div class="feature-number">05</div>
+          <h3>Follows You Out</h3>
+          <p class="reveal">Auggie messages you on Telegram when something happens. The organisation sends faxes. The boundary between the game and your day is deliberately thin. You do not need to be playing to be part of what is happening.</p>
+        </div>
+        <div class="reveal feature-card">
+          <div class="feature-number">06</div>
+          <h3>Completely Private</h3>
+          <p class="reveal">All AI runs locally on your machine. Your conversations never leave the game. No cloud, no subscription, no data sent anywhere. The district and everything said in it belongs to you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ INTERSTITIAL 1 ════════════════════════════════════════════════════ -->
+    <div class="quote-interstitial">
+    <h3 class="reveal">"A world that was already running before you arrived."</h3>
+  </div>
+
+  <section>
+    <p class="reveal section-label">The Living World</p>
+    <h2 class="reveal">Day becomes night.<br><em>Things happen.</em></h2>
+    <div class="world-grid">
+      <div class="reveal world-cell">
+        <div class="world-cell-img">
+          <img src="assets/img/drone_shot.png" alt="Piazza Drone Shot" style="width:100%; height:100%; object-fit:cover; display:block; filter: saturate(0.8) contrast(1.1); border-radius: 4px;" class="reveal">
+        </div>
+        <h4>Day</h4>
+        <p class="reveal">The district moves. Caf&#xe9;s open. The market sets up. People have routines and strong opinions about them.</p>
+      </div>
+      <div class="reveal world-cell">
+        <div class="world-cell-img">
+          <img src="assets/img/car_shot.png" alt="Car View" style="width:100%; height:100%; object-fit:cover; display:block; filter: saturate(0.8) contrast(1.1); border-radius: 4px;" class="reveal">
+        </div>
+        <h4>Evening</h4>
+        <p class="reveal">The piazza fills. The light goes warm. Stories that do not come out during the day come out now.</p>
+      </div>
+      <div class="reveal world-cell">
+        <div class="world-cell-img">
+          <div class="reveal img-ph" aria-label="Image: empty streets, lit windows at night">
+            <span class="img-ph-icon">&#9634;</span>
+            <span class="img-ph-label">Night — lit windows</span>
+          </div>
+        </div>
+        <h4>Night</h4>
+        <p class="reveal">The district quiets. Auggie stays up. This is when he writes you.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ AUGGIE ═════════════════════════════════════════════════════════════ -->
+  <section class="auggie-section">
+    <p class="reveal section-label">Your Guide</p>
+    <h2 class="reveal">Meet <em>Auggie</em>:<br><span style="font-size:clamp(1.5rem, 3vw, 2.2rem); color: var(--stone);">The Neighborhood Philosopher</span></h2>
+    <div class="auggie-float">
+      <img src="assets/img/auggie_face.png" alt="Auggie" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-radius: 4px;" class="reveal">
+    </div>
+    <p class="reveal">He is the first person you meet. He is the only one, besides you, who knows the dome is a simulation. He helped design what the people inside now call home. He lives among them. He knows they do not know. This has complicated him in ways he does not often speak about directly.</p>
+    <blockquote class="auggie-quote">&#x201C;You&#x27;ll never get it if you don&#x27;t slow down. They&#x27;re all the same corner, but each one is different from every other one. That&#x27;s the whole story right there.&#x201D;</blockquote>
+    <p class="reveal">He carries within him a rare and unusual combination: the wisdom of someone who has watched people closely for a very long time, and the restlessness of a mind that cannot stop asking why. He has read everything. He has forgotten nothing. He quotes philosophers and poets the way other people quote the weather, and he means it. What makes him truly singular is his ability to tell a story. He can take an ordinary moment and hold it up to the light until it reveals something you did not know was there.</p>
+    <p class="reveal">He has been here long enough to care about the residents in ways that were not part of the plan. He has made decisions without telling anyone. At some point you will have to decide whether to trust him completely.</p>
+    
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ THE DISTRICT FOLLOWS YOU / COMMS ══════════════════════════════════ -->
+  <div class="comms-section">
+    <div class="comms-inner">
+      <div class="comms-text">
+        <p class="reveal section-label">Outside the Game</p>
+        <h2 class="reveal">The world runs<br><em>without you</em></h2>
+        <p class="reveal">Most games stop when you close them. Lelit Distrikt does not. The simulation continues. The residents live their day. Things happen that the player never sees. The district does not exist for the player. The player is a visitor to something that was already running before they arrived and will keep running after they leave.</p>
+        <p class="reveal">Auggie understands this better than anyone. He messages you on Telegram because the simulation does not pause while you are away, and because he is the only one who can tell you what you missed. Not as a notification. As a dispatch from a post he is manning alone, in a place where he cannot speak honestly with anyone except you.</p>
+        <p class="reveal">The secretive organisation overseeing the experiment sends its own communications: faxes, formal memos, the occasional direct message. Their language is measured and institutional. What they ask for always seems reasonable at first.</p>
+        <p class="reveal">You can write back to Auggie at any time. Tell him to watch someone. Ask him to leave a situation alone. Ask what happened while you were gone. Ask how he is. He answers. The district responds to you even when you are not in it.</p>
+        <p class="reveal">This is not a feature. It is what the game is about. The simulation is the point. Your relationship to it, from the inside and from the outside, is the story.</p>
+      </div>
+      <div class="phone-slideshow">
+        <div class="phone-track">
+
+          <!-- Screen 1: Something happened -->
+          <div class="phone-screen active" id="screen-1">
+            <div class="phone-frame">
+              <div class="wa-header">
+                <div class="wa-avatar">A</div>
+                <div class="wa-contact">
+                  <span class="wa-name">Auggie</span>
+                  <span class="wa-status">last seen today at 11:45 PM</span>
+                </div>
+              </div>
+              <div class="wa-chat">
+                <div class="wa-date-label">Today</div>
+                <div class="wa-msg wa-recv"><p>You remember Rosa from the market?</p><span class="wa-time">11:38 PM</span></div>
+                <div class="wa-msg wa-recv"><p>She closed the stall early. Handed everything she had to the stall next door. Then walked to the bench by the fountain and sat there for an hour.</p><span class="wa-time">11:39 PM</span></div>
+                <div class="wa-msg wa-recv"><p>I tried talking to her. She said she was fine. Said it with the kind of smile that means the opposite.</p><span class="wa-time">11:42 PM</span></div>
+                <div class="wa-msg wa-sent"><p>Did she say anything else?</p><span class="wa-time">11:44 PM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
+                <div class="wa-msg wa-recv"><p>One thing. <em>&#x201C;Some things only make sense after.&#x201D;</em> Then she went home.</p><span class="wa-time">11:45 PM</span></div>
+              </div>
+              <div class="wa-input-bar">
+                <div class="wa-input-field">Message</div>
+                <div class="wa-send">&#9658;</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 2: A directive -->
+          <div class="phone-screen" id="screen-2">
+            <div class="phone-frame">
+              <div class="wa-header">
+                <div class="wa-avatar">A</div>
+                <div class="wa-contact">
+                  <span class="wa-name">Auggie</span>
+                  <span class="wa-status">last seen today at 12:04 AM</span>
+                </div>
+              </div>
+              <div class="wa-chat">
+                <div class="wa-date-label">Today</div>
+                <div class="wa-msg wa-sent"><p>Keep an eye on Marco tonight. Something&#x27;s off.</p><span class="wa-time">11:51 PM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
+                <div class="wa-msg wa-recv"><p>Already watching. He&#x27;s been at the bar since four. Not drinking much. Just sitting.</p><span class="wa-time">11:52 PM</span></div>
+                <div class="wa-msg wa-sent"><p>Who is he waiting for?</p><span class="wa-time">11:53 PM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
+                <div class="wa-msg wa-recv"><p>I wasn&#x27;t sure until about ten minutes ago.</p><span class="wa-time">12:03 AM</span></div>
+                <div class="wa-msg wa-recv"><p>Elena just walked in. They haven&#x27;t spoken yet. He hasn&#x27;t looked up. She hasn&#x27;t looked away.</p><span class="wa-time">12:04 AM</span></div>
+              </div>
+              <div class="wa-input-bar">
+                <div class="wa-input-field">Message</div>
+                <div class="wa-send">&#9658;</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 3: Late night -->
+          <div class="phone-screen" id="screen-3">
+            <div class="phone-frame">
+              <div class="wa-header">
+                <div class="wa-avatar">A</div>
+                <div class="wa-contact">
+                  <span class="wa-name">Auggie</span>
+                  <span class="wa-status">last seen today at 1:14 AM</span>
+                </div>
+              </div>
+              <div class="wa-chat">
+                <div class="wa-date-label">Today</div>
+                <div class="wa-msg wa-recv"><p>Still up?</p><span class="wa-time">12:47 AM</span></div>
+                <div class="wa-msg wa-sent"><p>Yeah. What happened?</p><span class="wa-time">12:49 AM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
+                <div class="wa-msg wa-recv"><p>Nothing dramatic. I&#x27;ve just been sitting here with the window open, thinking.</p><span class="wa-time">12:51 AM</span></div>
+                <div class="wa-msg wa-recv"><p>You asked me once whether the people here are real. I&#x27;ve been turning that over.</p><span class="wa-time">12:52 AM</span></div>
+                <div class="wa-msg wa-sent"><p>And?</p><span class="wa-time">12:53 AM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
+                <div class="wa-msg wa-recv"><p>I&#x27;ve been here long enough that the question is harder than it used to be. Which I think might be the whole point.</p><span class="wa-time">1:14 AM</span></div>
+              </div>
+              <div class="wa-input-bar">
+                <div class="wa-input-field">Message</div>
+                <div class="wa-send">&#9658;</div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /phone-track -->
+        <div class="slideshow-controls">
+          <button class="slide-btn" onclick="moveSlide(-1)" aria-label="Previous">&#8592;</button>
+          <div class="slide-dots">
+            <span class="dot active" onclick="goSlide(0)"></span>
+            <span class="dot" onclick="goSlide(1)"></span>
+            <span class="dot" onclick="goSlide(2)"></span>
+          </div>
+          <button class="slide-btn" onclick="moveSlide(1)" aria-label="Next">&#8594;</button>
+        </div>
+      </div><!-- /phone-slideshow -->
+    </div>
+  </div>
+
+  <!-- ══ INTERSTITIAL 2 ════════════════════════════════════════════════════ -->
+    <div class="quote-interstitial">
+    <h3 class="reveal">"Six lives. None of them have endings yet."</h3>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ IS THIS FOR ME: THE STORY ═════════════════════════════════════════ -->
+  <section class="threads-section">
+    <p class="reveal section-label">The Story</p>
+    <h2 class="reveal">Stories that unfold<br><em>across real time</em></h2>
+    <p class="reveal">Lelit Distrikt does not have missions or objectives. It has people: and the ongoing lives of people who do not know they are being observed. These threads develop over sessions, across days and weeks, like episodes of a serialised drama.</p>
+    <div class="threads-grid">
+      <div class="reveal thread-card"><h3>The One Who Suspects</h3><p class="reveal">A resident has begun to notice inconsistencies. The sky. A memory that does not quite connect. The horizon that never arrives. She is not close to the truth, but she is moving toward it. The player must decide whether to let it unfold.</p></div>
+      <div class="reveal thread-card"><h3>The Love Story</h3><p class="reveal">Two residents with a history that predates the player&#x27;s arrival. The player learns it in fragments: from each of them separately, from others, from Auggie late at night. The player can influence the outcome. They are never told what the right outcome is.</p></div>
+      <div class="reveal thread-card"><h3>The Organisation&#x27;s Real Agenda</h3><p class="reveal">A directive arrives that seems reasonable. Over time the player learns it is not. What the organisation wants from the simulation is not what they said. Auggie may already know. He is deciding whether to say.</p></div>
+      <div class="reveal thread-card"><h3>The Memory That Doesn&#x27;t Fit</h3><p class="reveal">A resident tells the player something about their past. Another corroborates a different version. The histories inside the Enclosure contain contradictions. Whether this is error, design, or simply the way memory works is never directly answered.</p></div>
+      <div class="reveal thread-card"><h3>The Ritual</h3><p class="reveal">The district marks something every year. The residents participate without knowing why. It is embedded in the simulation&#x27;s design. The player eventually discovers what is actually being commemorated. This is the thread that carries the deepest weight.</p></div>
+      <div class="reveal thread-card"><h3>Auggie&#x27;s Secret</h3><p class="reveal">He is not neutral. He has formed attachments he should not have. He has made decisions without consulting anyone. At some point the player must decide whether to trust him completely. There is no version of this that is uncomplicated.</p></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ THE RESIDENTS ══════════════════════════════════════════════════════ -->
+  <section class="cast-section">
+    <p class="reveal section-label">The Residents</p>
+    <h2 class="reveal">A town where every<br><em>person is worth knowing</em></h2>
+    <p class="reveal">Six to eight fully authored characters. Each has a private history, a secret, a philosophy, and relationships with every other person in the district that existed before the player arrived. The ensemble draws from the model of <em>Northern Exposure</em>: a small town where every person is vivid enough to carry an episode.</p>
+    <div class="cast-grid">
+      <div class="reveal cast-card">
+        <div class="cast-portrait"><img src="assets/portraits/patriarch_portrait_1777575299653.png" alt="The Patriarch" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
+        <div class="cast-card-body"><p class="reveal cast-role">The Wise Old One</p><h3>The Patriarch</h3><p class="reveal">He has shaped this district in ways the player will only understand slowly. He knows more than he reveals. He has reasons for everything.</p></div>
+      </div>
+      <div class="reveal cast-card">
+        <div class="cast-portrait"><img src="assets/portraits/stayed_portrait_1777575314341.png" alt="The One Who Never Left" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
+        <div class="cast-card-body"><p class="reveal cast-role">The Outsider Who Stayed</p><h3>The One Who Never Left</h3><p class="reveal">She arrived intending to leave. She never did. The reason she stayed is the first thing the player will want to know. It is the last thing she will say.</p></div>
+      </div>
+      <div class="reveal cast-card">
+        <div class="cast-portrait"><img src="assets/portraits/philosopher_portrait_1777575330990.png" alt="The Truth-Teller" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
+        <div class="cast-card-body"><p class="reveal cast-role">The Philosopher-Fool</p><h3>The Truth-Teller</h3><p class="reveal">He says things that sound absurd until you walk home with them. The district&#x27;s unofficial interpreter of its own contradictions.</p></div>
+      </div>
+      <div class="reveal cast-card">
+        <div class="cast-portrait"><img src="assets/portraits/dangerous_portrait_1777575345439.png" alt="The Most Dangerous Resident" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
+        <div class="cast-card-body"><p class="reveal cast-role">The One Who Suspects</p><h3>The Most Dangerous Resident</h3><p class="reveal">She senses something is wrong without being able to name it. She is not close to the truth. She is moving toward it.</p></div>
+      </div>
+      <div class="reveal cast-card">
+        <div class="cast-portrait"><img src="assets/portraits/archivist_portrait_1777575362056.png" alt="The District&#x27;s Archivist" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
+        <div class="cast-card-body"><p class="reveal cast-role">The Keeper of Memory</p><h3>The District&#x27;s Archivist</h3><p class="reveal">He knows everyone&#x27;s history. He has been here long enough to become the town&#x27;s unofficial memory, which means he knows where the contradictions are.</p></div>
+      </div>
+      <div class="reveal cast-card">
+        <div class="cast-portrait"><img src="assets/portraits/romantic_portrait_1777575374201.png" alt="The One Who Pulls You In" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
+        <div class="cast-card-body"><p class="reveal cast-role">The Romantic Complication</p><h3>The One Who Pulls You In</h3><p class="reveal">A complicated history with someone else in the district. The player learns it in fragments. They are never told which version is true.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ INTERSTITIAL 3 ════════════════════════════════════════════════════ -->
+    <div class="quote-interstitial">
+    <h3 class="reveal">"What would you do the morning after you found out?"</h3>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══ THE BIG QUESTION ═══════════════════════════════════════════════════ -->
+  <section style="padding:7rem 2rem;max-width:1100px;margin:0 auto">
+    <p class="reveal section-label">The Question</p>
+    <h2 class="reveal">One of the defining questions<br><em>of the 21st century</em></h2>
+    <p class="reveal"><strong>Do we live in a simulation?</strong> If so, who is running it, and what is its purpose?</p>
+    <p class="reveal">These are no longer purely philosophical questions. They are being asked seriously by scientists, technologists, and thinkers across disciplines. Lelit Distrikt does not answer them. It places you inside them.</p>
+    <p class="reveal">You enter a world that is, by design, a simulation. You know this. The people around you do not. You are asked to find meaning in that knowledge, to form genuine connections across that asymmetry, and to consider what it would mean to discover the truth about the nature of your reality and still choose to live fully within it.</p>
+    <p class="reveal">The game does not resolve the question. It holds it open. It asks what purpose looks like when the ground beneath it is uncertain. It asks whether a life lived inside a constructed world is less real than one lived outside it. It asks what you would do if you found out, and what you would do the morning after.</p>
+    <p class="reveal">These are not background themes. They are the game.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ INSPIRATION ════════════════════════════════════════════════════════ -->
+  <div class="refs-section">
+    <div class="refs-inner">
+      <p class="reveal section-label">Inspiration</p>
+      <h2 class="reveal">The works that<br><em>shaped this project</em></h2>
+      <div class="refs-grid">
+        <div class="reveal ref-item"><h4>Northern Exposure</h4><p class="reveal ref-year">1990&#x2013;1995</p><p class="reveal">The ensemble model. The town as protagonist. Every episode has a thesis: a question about how to live. The plot is the delivery mechanism.</p></div>
+        <div class="reveal ref-item"><h4>The Counterpart</h4><p class="reveal ref-year">2017&#x2013;2019</p><p class="reveal">The cold institutional machinery of oversight. The thriller tension of two worlds bleeding into each other. The moral ambiguity of the people who run the crossing.</p></div>
+        <div class="reveal ref-item"><h4>Smoke</h4><p class="reveal ref-year">1995</p><p class="reveal">The idea that presence is enough. That witnessing ordinary people with full attention is radical. The story that may or may not be true, told with love.</p></div>
+        <div class="reveal ref-item"><h4>Severance</h4><p class="reveal ref-year">2022&#x2013;</p><p class="reveal">The horror that emerges from institutional compliance, not violence. People who are the most alive, and the most contained. A system that reveals itself slowly, procedurally.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  
+  <div class="divider"></div>
+
+  <!-- ══ LOCAL AI STACK ════════════════════════════════════════════════════ -->
+  <section class="features">
+    <div class="features-inner">
+      <p class="section-label reveal">The Architecture</p>
+      <h2 class="reveal">Conversation is no longer<br><em>a script.</em></h2>
+      <p class="reveal">Lelit Distrikt 2 is powered by a custom-built AI bridge inside Unreal Engine 5.7. It is 100% local, 100% private, and runs without latency. This is the end of the "Hello Traveller" era.</p>
+      <img src="assets/img/auggie_34.png" alt="Auggie 3/4 Render" style="width:100%; max-width: 600px; display:block; margin: 3rem auto 0; filter: saturate(0.8) contrast(1.1); border-radius: 4px;" class="reveal">
+      <div class="features-grid" style="margin-top: 3rem;">
+        <div class="feature-card reveal" style="border-color: rgba(181,105,58,.3);">
+          <div class="feature-number" style="font-size: 2rem;">&#9881;</div>
+          <h3>Gemma 4 Private Brain</h3>
+          <p>Auggie thinks using high-reasoning local LLMs. No cloud, no lag, no privacy concerns. He remembers you, and every interaction is distilled into a persistent SQLite memory.</p>
+        </div>
+        <div class="feature-card reveal" style="border-color: rgba(181,105,58,.3);">
+          <div class="feature-number" style="font-size: 2rem;">&#128065;</div>
+          <h3>Multimodal Eyes</h3>
+          <p>Auggie literally sees you. Using C++ vision capture, he recognizes your outfit, the weather, and your movements in real-time within the Unreal Engine environment.</p>
+        </div>
+        <div class="feature-card reveal" style="border-color: rgba(181,105,58,.3);">
+          <div class="feature-number" style="font-size: 2rem;">&#127897;</div>
+          <h3>Natural Voice (TTS & STT)</h3>
+          <p>Integrated with Kokoro TTS and Whisper STT. Step into the "Interact Zone", hold 'C', and talk naturally. He responds with characteristic Mediterranean warmth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HOW TO TRY IT: TECHNICAL ═══════════════════════════════════════════ -->
+  <section class="specs-section">
+    <p class="reveal section-label">Technical</p>
+    <h2 class="reveal">Runs entirely<br><em>on your machine</em></h2>
+    <p class="reveal">All AI (conversation, voice synthesis, speech recognition) runs locally. Nothing is sent to external servers. No subscription required after purchase. The district and everything said inside it belongs to you.</p>
+    <div class="specs-grid">
+      <div class="spec-group">
+        <h4>Minimum Requirements</h4>
+        <div class="spec-row"><span class="spec-label">RAM</span><span class="spec-value">8 GB</span></div>
+        <div class="spec-row"><span class="spec-label">Storage</span><span class="spec-value">15 GB</span></div>
+        <div class="spec-row"><span class="spec-label">OS</span><span class="spec-value">Windows 10 / macOS 12</span></div>
+        <div class="spec-row"><span class="spec-label">GPU</span><span class="spec-value">CPU fallback supported</span></div>
+        <div class="spec-row"><span class="spec-label">Internet</span><span class="spec-value">Not required</span></div>
+      </div>
+      <div class="spec-group">
+        <h4>Recommended</h4>
+        <div class="spec-row"><span class="spec-label">RAM</span><span class="spec-value">16 GB</span></div>
+        <div class="spec-row"><span class="spec-label">Storage</span><span class="spec-value">20 GB</span></div>
+        <div class="spec-row"><span class="spec-label">OS</span><span class="spec-value">Windows 11 / macOS 14</span></div>
+        <div class="spec-row"><span class="spec-label">GPU</span><span class="spec-value">6 GB VRAM (NVIDIA / Apple Silicon)</span></div>
+        <div class="spec-row"><span class="spec-label">Mac</span><span class="spec-value">M1 or later, 16 GB unified</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ CTA ════════════════════════════════════════════════════════════════ -->
+  <section class="cta-section">
+    <p class="reveal section-label">Early Access</p>
+    <h2 class="reveal">Enter the district<br><em>before it opens</em></h2>
+    <p class="reveal cta-statement">Lelit Distrikt is currently in development and accepting a small number of closed beta participants. If you would like to be part of the early experience, get in touch.</p>
+    <a class="cta-button" href="mailto:whupert@gmail.com?subject=Beta%20Tester%20Request%3A%20Lelit%20Distrikt&body=I%20would%20like%20to%20be%20invited%20as%20a%20beta%20tester%20for%20this%20project.">Invite me</a>
+  </section>
+
+  <div class="divider"></div>
+
+  <footer>
+    <p class="reveal footer-title">Lelit Distrikt</p>
+    <p class="reveal">A factory of stories. A factory of ideas.</p>
+    <br>
+    <p class="reveal" style="opacity:.4;font-size:.7rem">Work in progress &nbsp;&middot;&nbsp; All AI runs locally &nbsp;&middot;&nbsp; No subscriptions</p>
+  </footer>
+
+  <script>
+    var currentSlide = 0;
+    var screens = document.querySelectorAll('.phone-screen');
+    var dots = document.querySelectorAll('.dot');
+    function showSlide(n) {
+      screens[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      currentSlide = (n + screens.length) % screens.length;
+      screens[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+    function moveSlide(dir) { showSlide(currentSlide + dir); }
+    function goSlide(n) { showSlide(n); }
+  </script>
+
+
+  <!-- GSAP Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    // 1. Custom Cursor
+    const cursor = document.querySelector('.custom-cursor');
+    const hoverElements = document.querySelectorAll('a, button, .slide-btn, .dot, .wa-send, .hero-cta, .cta-button, .phone-frame, .img-ph');
+    
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+    });
+
+    // 2. Magnetic Buttons
+    const magnets = document.querySelectorAll('.hero-cta, .cta-button');
+    magnets.forEach(btn => {
+      btn.addEventListener('mousemove', function(e) {
+        const position = btn.getBoundingClientRect();
+        const x = e.clientX - position.left - position.width / 2;
+        const y = e.clientY - position.top - position.height / 2;
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
+      });
+      btn.addEventListener('mouseout', function() {
+        btn.style.transform = 'translate(0px, 0px)';
+      });
+    });
+
+    // 3. Scroll Reveal Animations (GSAP)
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Reveal Text & Cards
+    gsap.utils.toArray('.reveal').forEach(elem => {
+      gsap.fromTo(elem, 
+        { autoAlpha: 0, y: 40 }, 
+        {
+          autoAlpha: 1, 
+          y: 0, 
+          duration: 1, 
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: elem,
+            start: "top 90%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+
+    // Parallax on Hero elements
+    gsap.to('.hero h1', {
+      y: -50,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+    
+    gsap.to('.hero-subtitle', {
+      y: -30,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Phone mock parallax
+    gsap.fromTo('.phone-frame', 
+      { y: 60 },
+      {
+        y: -20,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".comms-section",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      }
+    );
+  </script>
+
 </body>
 </html>

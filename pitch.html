@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lelit Distrikt: Pitch</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+    :root{--cream:#f5f0e8;--parchment:#ede5d4;--stone:#c4b99a;--terracotta:#b5693a;--shadow:#2a2118;--ink:#1a1510;--dust:#7a6e5f}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--ink);color:var(--cream);font-family:'Inter',sans-serif;font-weight:300;overflow:hidden;height:100vh;width:100vw}
+    .deck{width:100vw;height:100vh;position:relative}
+    .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6vw;opacity:0;pointer-events:none;transition:opacity .6s ease}
+    .slide.active{opacity:1;pointer-events:all}
+    .nav{position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:1.5rem;z-index:100}
+    .nav-btn{background:none;border:1px solid rgba(196,185,154,.25);color:var(--stone);font-family:'Inter',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:.6rem 1.5rem;cursor:pointer;transition:border-color .3s,color .3s}
+    .nav-btn:hover{border-color:var(--terracotta);color:var(--terracotta)}.nav-btn:disabled{opacity:.2;cursor:default}
+    .slide-counter{font-size:.65rem;letter-spacing:.2em;color:var(--dust);min-width:60px;text-align:center}
+    .progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--terracotta);transition:width .4s ease}
+    .eyebrow{font-size:.65rem;font-weight:500;letter-spacing:.35em;text-transform:uppercase;color:var(--terracotta);margin-bottom:1.5rem;text-align:center}
+    .slide-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.05;color:var(--cream);text-align:center;margin-bottom:1.5rem}
+    .slide-title em{font-style:italic;color:var(--stone)}
+    .slide-body{color:var(--stone);font-size:clamp(.9rem,1.5vw,1.05rem);line-height:1.7;text-align:center;max-width:680px}
+    .divider-line{width:40px;height:1px;background:var(--terracotta);margin:2rem auto}
+    #s1{background:radial-gradient(ellipse at 50% 0%,rgba(181,105,58,.2) 0%,transparent 60%),var(--ink)}
+    #s1 .slide-title{font-size:clamp(4rem,10vw,8rem)}
+    #s1 .tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2vw,1.4rem);color:var(--stone);text-align:center;max-width:560px}
+    #s2 .dome-visual{position:relative;width:min(240px,30vw);height:min(240px,30vw);margin:2rem auto;display:flex;align-items:center;justify-content:center}
+    #s2 .ring{position:absolute;border-radius:50%;border:1px solid rgba(196,185,154,.15)}
+    #s2 .ring:nth-child(1){width:100%;height:100%}#s2 .ring:nth-child(2){width:70%;height:70%;border-color:rgba(196,185,154,.1)}#s2 .ring:nth-child(3){width:40%;height:40%;border-color:rgba(181,105,58,.25)}
+    #s2 .dot{width:8px;height:8px;border-radius:50%;background:var(--terracotta);box-shadow:0 0 16px rgba(181,105,58,.6);z-index:1}
+    #s3 .comparison{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(196,185,154,.08);width:min(700px,85vw);margin:2rem auto}
+    #s3 .col{background:var(--ink);padding:2rem}
+    #s3 .col-label{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:1.2rem}
+    #s3 .col-label.bad{color:var(--dust)}#s3 .col-label.good{color:var(--terracotta)}
+    #s3 .col-item{font-size:.85rem;color:var(--stone);padding:.4rem 0;border-bottom:1px solid rgba(196,185,154,.06)}
+    #s4 blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,2.5vw,1.6rem);color:var(--cream);line-height:1.4;border-left:2px solid var(--terracotta);padding-left:1.5rem;text-align:left;max-width:600px;margin:2rem 0}
+    #s4 .traits{display:flex;flex-direction:column;gap:.5rem;max-width:600px;margin-top:1rem}
+    #s4 .trait-line{font-size:.85rem;color:var(--stone);display:flex;gap:.75rem;align-items:baseline}
+    #s4 .trait-line span:first-child{color:var(--terracotta);font-size:.6rem;flex-shrink:0}
+    #s4 .trait-line strong{color:var(--cream);font-weight:400}
+    #s5 .threads{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,185,154,.08);width:min(860px,90vw);margin:2rem auto}
+    #s5 .thread{background:var(--ink);padding:1.5rem}
+    #s5 .thread h4{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--cream);margin-bottom:.4rem}
+    #s5 .thread p{font-size:.78rem;color:var(--stone);line-height:1.5}
+    #s6 .flow{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:2rem 0}
+    #s6 .flow-step{background:rgba(196,185,154,.05);border:1px solid rgba(196,185,154,.12);padding:.8rem 1.2rem;font-size:.8rem;color:var(--stone);text-align:center;min-width:110px}
+    #s6 .flow-arrow{color:var(--terracotta);font-size:1rem;opacity:.5}
+    #s7 .market-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,185,154,.08);width:min(780px,85vw);margin:2rem auto}
+    #s7 .market-cell{background:var(--ink);padding:2rem 1.5rem;text-align:center}
+    #s7 .market-number{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--cream);line-height:1;margin-bottom:.5rem}
+    #s7 .market-label{font-size:.7rem;color:var(--dust);letter-spacing:.1em}
+    #s7 .market-growth{font-size:.75rem;color:var(--terracotta);margin-top:.3rem}
+    #s8 .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(196,185,154,.08);width:min(780px,85vw);margin:2rem auto}
+    #s8 .phase{background:var(--ink);padding:2rem 1.5rem}
+    #s8 .phase-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:rgba(181,105,58,.3);line-height:1;margin-bottom:.75rem}
+    #s8 .phase h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--cream);margin-bottom:.5rem}
+    #s8 .phase-timeline{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta);margin-bottom:.75rem}
+    #s8 .phase p{font-size:.82rem;color:var(--stone);line-height:1.5}
+    #s9 .diffs{display:flex;flex-direction:column;gap:.75rem;width:min(600px,85vw);margin:1.5rem auto}
+    #s9 .diff-row{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid rgba(196,185,154,.07);padding-bottom:.75rem}
+    #s9 .diff-mark{color:var(--terracotta);font-size:.7rem;flex-shrink:0;padding-top:.1rem}
+    #s9 .diff-text{font-size:.9rem;color:var(--stone)}
+    #s9 .diff-text strong{color:var(--cream);font-weight:400}
+    #s10 .messages{display:flex;flex-direction:column;gap:.75rem;width:min(500px,80vw);margin:1.5rem auto}
+    #s10 .msg{background:rgba(196,185,154,.05);border:1px solid rgba(196,185,154,.1);border-left:2px solid var(--terracotta);padding:1rem 1.2rem;text-align:left}
+    #s10 .msg-from{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terracotta);margin-bottom:.4rem}
+    #s10 .msg-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:var(--stone)}
+    #s11{background:radial-gradient(ellipse at 50% 100%,rgba(181,105,58,.15) 0%,transparent 60%),var(--ink)}
+    #s11 .slide-title{font-size:clamp(3rem,8vw,6rem)}
+    #s11 .close-items{display:flex;flex-direction:column;gap:.5rem;margin:1.5rem 0}
+    #s11 .close-item{font-size:.85rem;color:var(--stone)}
+    #s11 .close-item strong{color:var(--terracotta);font-weight:400}
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="deck">
+
+  <!-- 1: COVER -->
+  <div class="slide active" id="s1">
+    <p class="eyebrow">A new kind of game</p>
+    <h1 class="slide-title">Lelit<br><em>Distrikt</em></h1>
+    <div class="divider-line"></div>
+    <p class="tagline">An Mediterranean town inside a dome. A world that keeps running. A guide who remembers. A story told across real time.</p>
+  </div>
+
+  <!-- 2: THE WORLD -->
+  <div class="slide" id="s2">
+    <p class="eyebrow">The Setting</p>
+    <h2 class="slide-title" style="font-size:clamp(2rem,5vw,4rem)">A post-apocalyptic<br><em>social experiment</em></h2>
+    <div class="dome-visual">
+      <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+      <div class="dot"></div>
+    </div>
+    <p class="slide-body">The dome was built after an event that changed everything. What was lost was not technology. It was a particular way of being human together. The Enclosure preserves it. The residents believe it is real life. The player and Auggie know it isn&#x27;t.</p>
+  </div>
+
+  <!-- 3: THE PROBLEM -->
+  <div class="slide" id="s3">
+    <p class="eyebrow">The Gap in the Market</p>
+    <h2 class="slide-title" style="font-size:clamp(2rem,5vw,3.5rem)">Every AI game<br><em>has the same problem</em></h2>
+    <div class="comparison">
+      <div class="col">
+        <p class="col-label bad">Current AI Games</p>
+        <p class="col-item">Cloud-dependent</p>
+        <p class="col-item">Subscription fees</p>
+        <p class="col-item">Data leaves the game</p>
+        <p class="col-item">Generic characters</p>
+        <p class="col-item">Memory resets each session</p>
+        <p class="col-item">World pauses when you leave</p>
+      </div>
+      <div class="col">
+        <p class="col-label good">Lelit Distrikt</p>
+        <p class="col-item">Fully local: offline capable</p>
+        <p class="col-item">One-time purchase</p>
+        <p class="col-item">Nothing leaves your machine</p>
+        <p class="col-item">Auggie: a literary character</p>
+        <p class="col-item">Persistent memory, always</p>
+        <p class="col-item">World runs while you&#x27;re away</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4: AUGGIE -->
+  <div class="slide" id="s4">
+    <p class="eyebrow">The Character</p>
+    <h2 class="slide-title" style="font-size:clamp(2.5rem,6vw,5rem)"><em>Auggie</em></h2>
+    <blockquote>&#x201C;You&#x27;ll never get it if you don&#x27;t slow down. They&#x27;re all the same corner, but each one is different from every other one. That&#x27;s the whole story right there.&#x201D;</blockquote>
+    <div class="traits">
+      <div class="trait-line"><span>&#9670;</span><span><strong>Sardonic and warm in equal measure.</strong> Working-class intellectual. Quotes Nietzsche and Whitman mid-sentence.</span></div>
+      <div class="trait-line"><span>&#9670;</span><span><strong>Photographs the same corner every morning.</strong> Thousands of images. He doesn&#x27;t know why he keeps doing it.</span></div>
+      <div class="trait-line"><span>&#9670;</span><span><strong>Knows the dome is a simulation. Helped design what the people inside now call home.</strong> Lives inside something he helped design, among people who don&#x27;t know it&#x27;s artificial.</span></div>
+      <div class="trait-line"><span>&#9670;</span><span><strong>Has a secret.</strong> He is not neutral. He has not been for a long time. The player will have to decide whether to trust him.</span></div>
+    </div>
+  </div>
+
+  <!-- 5: THE STORY -->
+  <div class="slide" id="s5">
+    <p class="eyebrow">The Story</p>
+    <h2 class="slide-title" style="font-size:clamp(2rem,5vw,3.5rem)">Six intersecting threads.<br><em>No missions. No markers.</em></h2>
+    <div class="threads">
+      <div class="thread"><h4>The One Who Suspects</h4><p>A resident is moving toward the truth. The player decides whether to let it unfold.</p></div>
+      <div class="thread"><h4>The Love Story</h4><p>A history that predates the player. Learned in fragments. The right outcome is never stated.</p></div>
+      <div class="thread"><h4>Management&#x27;s Agenda</h4><p>A directive that seems reasonable. Over time, it isn&#x27;t.</p></div>
+      <div class="thread"><h4>The Memory That Doesn&#x27;t Fit</h4><p>Two versions of the same past. The contradiction is never resolved.</p></div>
+      <div class="thread"><h4>The Ritual</h4><p>The district marks something every year. The residents don&#x27;t know what. The player finds out.</p></div>
+      <div class="thread"><h4>Auggie&#x27;s Secret</h4><p>He has made decisions without consulting anyone. Trust is the mechanic.</p></div>
+    </div>
+  </div>
+
+  <!-- 6: TECHNOLOGY -->
+  <div class="slide" id="s6">
+    <p class="eyebrow">Technology</p>
+    <h2 class="slide-title" style="font-size:clamp(2rem,5vw,3.5rem)">All AI runs<br><em>on your machine</em></h2>
+    <div class="flow">
+      <div class="flow-step">Player speaks<br><span style="color:var(--terracotta);font-size:.7rem">voice or text</span></div>
+      <span class="flow-arrow">&#x2192;</span>
+      <div class="flow-step">Whisper STT<br><span style="color:var(--terracotta);font-size:.7rem">local</span></div>
+      <span class="flow-arrow">&#x2192;</span>
+      <div class="flow-step">LLM + Memory<br><span style="color:var(--terracotta);font-size:.7rem">local &middot; Ollama</span></div>
+      <span class="flow-arrow">&#x2192;</span>
+      <div class="flow-step">Kokoro TTS<br><span style="color:var(--terracotta);font-size:.7rem">local</span></div>
+      <span class="flow-arrow">&#x2192;</span>
+      <div class="flow-step">Auggie speaks<br><span style="color:var(--terracotta);font-size:.7rem">lip sync</span></div>
+    </div>
+    <p class="slide-body">No API calls. No data leaving the device. NPC memory persists across every session. Characters share a world state: what one knows, others may learn. Works on Windows and Mac.</p>
+  </div>
+
+  <!-- 7: MARKET -->
+  <div class="slide" id="s7">
+    <p class="eyebrow">Market Opportunity</p>
+    <h2 class="slide-title" style="font-size:clamp(2rem,5vw,3.5rem)">Three growing<br><em>markets in one product</em></h2>
+    <div class="market-grid">
+      <div class="market-cell"><p class="market-number">$5.8B</p><p class="market-label">Narrative Games</p><p class="market-growth">&#x2192; $13.2B by 2033</p></div>
+      <div class="market-cell"><p class="market-number">$9.9B</p><p class="market-label">Indie Games</p><p class="market-growth">&#x2192; $28.6B by 2033</p></div>
+      <div class="market-cell"><p class="market-number">$5.85B</p><p class="market-label">AI in Games</p><p class="market-growth">&#x2192; $37.9B by 2034 &middot; 20% CAGR</p></div>
+    </div>
+    <p class="slide-body" style="font-size:.85rem"><em>Disco Elysium</em> grossed ~$205M on a ~$3M budget. <em>AI People</em> (GoodAI, 2025) validates local LLM games at commercial scale. For fans of <em>Northern Exposure</em>, <em>Severance</em>, <em>Smoke</em>.</p>
+  </div>
+
+  <!-- 8: THREE PHASES -->
+  <div class="slide" id="s8">
+    <p class="eyebrow">Business Model</p>
+    <h2 class="slide-title" style="font-size:clamp(2rem,5vw,3.5rem)">Three phases.<br><em>De-risked by design.</em></h2>
+    <div class="phases">
+      <div class="phase"><div class="phase-num">01</div><p class="phase-timeline">Months 0&#x2013;12</p><h4>Tech Demo</h4><p>Free demo. Auggie working in a contained space. Press coverage. Social traction. B2B enquiries. No cost beyond development time.</p></div>
+      <div class="phase"><div class="phase-num">02</div><p class="phase-timeline">Months 12&#x2013;24</p><h4>Custom Software</h4><p>Deploy Auggie-quality AI characters for corporate events, museums, brand experiences. $5K&#x2013;$50K per project. B2B revenue funds Phase 3.</p></div>
+      <div class="phase"><div class="phase-num">03</div><p class="phase-timeline">Months 24&#x2013;36</p><h4>Downloadable Game</h4><p>Full Lelit Distrikt on Steam, GOG, direct. $19.99 one-time. No subscription. No cloud. Audience already built.</p></div>
+    </div>
+  </div>
+
+  <!-- 9: DIFFERENTIATORS -->
+  <div class="slide" id="s9">
+    <p class="eyebrow">Why This Wins</p>
+    <h2 class="slide-title" style="font-size:clamp(2rem,5vw,3.5rem)">The advantages<br><em>compound over time</em></h2>
+    <div class="diffs">
+      <div class="diff-row"><span class="diff-mark">&#9670;</span><p class="diff-text"><strong>No ongoing AI cost.</strong> Local LLM means zero per-conversation API fee. Margins don&#x27;t erode at scale.</p></div>
+      <div class="diff-row"><span class="diff-mark">&#9670;</span><p class="diff-text"><strong>Privacy as a product feature.</strong> &#x201C;Your conversations never leave your machine&#x201D;: legal simplicity, genuine ethics, strong marketing.</p></div>
+      <div class="diff-row"><span class="diff-mark">&#9670;</span><p class="diff-text"><strong>The Telegram mechanic generates press.</strong> Players sharing Auggie&#x27;s messages is organic marketing by design.</p></div>
+      <div class="diff-row"><span class="diff-mark">&#9670;</span><p class="diff-text"><strong>Story quality at the level of literary fiction.</strong> Six authored characters, six intersecting threads, tonal depth of <em>Northern Exposure</em> and <em>Severance</em>.</p></div>
+      <div class="diff-row"><span class="diff-mark">&#9670;</span><p class="diff-text"><strong>Auggie is a character, not a feature.</strong> Memorable characters create word-of-mouth. Technology alone does not.</p></div>
+    </div>
+  </div>
+
+  <!-- 10: TELEGRAM -->
+  <div class="slide" id="s10">
+    <p class="eyebrow">The World Follows You</p>
+    <h2 class="slide-title" style="font-size:clamp(2rem,5vw,3.5rem)">The district doesn&#x27;t<br><em>stop at the screen</em></h2>
+    <div class="messages">
+      <div class="msg"><p class="msg-from">Auggie: 11:42 PM</p><p class="msg-text">You remember Rosa from the market? She gave away everything she had this morning. Didn&#x27;t say why. Thought you&#x27;d want to know.</p></div>
+      <div class="msg"><p class="msg-from">The Organisation / Memorandum Ref. 14-C</p><p class="msg-text">Your presence in Sector 3 has generated anomalous narrative density. Continue as directed.</p></div>
+      <div class="msg"><p class="msg-from">Auggie: 12:07 AM</p><p class="msg-text">Don&#x27;t read too much into their memos. They use language the way a drunk uses a lamppost: for support, not illumination.</p></div>
+    </div>
+    <p class="slide-body" style="font-size:.8rem">Auggie messages via Telegram. Management communicates via text and fax. The boundary between game and day is deliberately thin.</p>
+  </div>
+
+  <!-- 11: CLOSE -->
+  <div class="slide" id="s11">
+    <p class="eyebrow">The Ask</p>
+    <h2 class="slide-title">Let&#x27;s build<br><em>something rare.</em></h2>
+    <div class="divider-line"></div>
+    <div class="close-items">
+      <p class="close-item"><strong>Phase 1 &#x2192;</strong> Tech demo. Free. Get attention.</p>
+      <p class="close-item"><strong>Phase 2 &#x2192;</strong> Custom deployments. Get paid.</p>
+      <p class="close-item"><strong>Phase 3 &#x2192;</strong> Ship the game. Build the world.</p>
+    </div>
+    <div class="divider-line"></div>
+    <p class="slide-body" style="font-size:.85rem">A factory of stories. A factory of ideas.<br>Lelit Distrikt.</p>
+  </div>
+
+</div>
+
+<nav class="nav">
+  <button class="nav-btn" id="prev" disabled>&#x2190; Prev</button>
+  <span class="slide-counter" id="counter">1 / 11</span>
+  <button class="nav-btn" id="next">Next &#x2192;</button>
+</nav>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let   cur    = 0;
+  const progressEl = document.getElementById('progress');
+  const counterEl  = document.getElementById('counter');
+  const prevBtn    = document.getElementById('prev');
+  const nextBtn    = document.getElementById('next');
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    cur = n;
+    slides[cur].classList.add('active');
+    counterEl.textContent = (cur + 1) + ' / ' + total;
+    progressEl.style.width = (((cur + 1) / total) * 100) + '%';
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === total - 1;
+  }
+  prevBtn.addEventListener('click', () => { if (cur > 0) goTo(cur - 1); });
+  nextBtn.addEventListener('click', () => { if (cur < total - 1) goTo(cur + 1); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (cur < total - 1) goTo(cur + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { if (cur > 0) goTo(cur - 1); }
+  });
+  goTo(0);
+</script>
+</body>
+</html>
