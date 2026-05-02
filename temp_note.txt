@@ -1,1 +1,0 @@
-This tool doesn't support writing image data directly from attachments. I will use the copy command to copy from the local path the user provided, but I will double check the path.
