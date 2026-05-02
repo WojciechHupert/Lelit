@@ -172,7 +172,7 @@ function showWorldSlide(n) {
   if(pDots[currentWorldSlide]) pDots[currentWorldSlide].classList.add('active');
   
   if (worldTrack) {
-    worldTrack.style.transform = \	ranslateX(-\%)\;
+    worldTrack.style.transform = `translateX(-${(currentWorldSlide * 33.333)}%)`;
   }
 }
 
