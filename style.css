@@ -676,6 +676,61 @@ body, a, button, .slide-btn, .dot, .wa-send, .hero-cta, .cta-button, .nav-logo {
   color: var(--terracotta);
 }
 
+/* --- Diagram Grid (Section 3) --- */
+.diagram-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem 4rem;
+  margin-top: 4rem;
+}
+.diagram-point {
+  border-top: 1px solid rgba(196,185,154,.15);
+  padding-top: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.diagram-point h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.diagram-point h3::after {
+  content: '+';
+  color: var(--terracotta);
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: transform 0.3s ease;
+}
+.diagram-point.expanded h3::after {
+  content: '−';
+  transform: rotate(180deg);
+}
+.diagram-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;
+}
+.diagram-point.expanded .diagram-content {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 1.5rem;
+}
+.diagram-content p {
+  color: var(--gold); /* yellow text upon expansion */
+  font-size: 0.95rem;
+  margin: 0;
+  max-width: none;
+}
+.diagram-point:hover h3 {
+  color: var(--gold);
+}
+
 @media(max-width:768px){
   .hero-split-layout { grid-template-columns: 1fr; gap: 4rem; }
   .hero-right-col { padding-top: 0; }

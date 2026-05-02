@@ -19,7 +19,7 @@ function goSlide(n) { showSlide(n); }
 document.addEventListener("DOMContentLoaded", (event) => {
   // 1. Custom Cursor
   const cursor = document.querySelector('.custom-cursor');
-  const hoverElements = document.querySelectorAll('a, button, .slide-btn, .dot, .wa-send, .hero-cta, .cta-button, .phone-frame, .img-ph');
+  const hoverElements = document.querySelectorAll('a, button, .slide-btn, .dot, .wa-send, .hero-cta, .cta-button, .phone-frame, .img-ph, .diagram-point');
   
   if (cursor) {
     document.addEventListener('mousemove', (e) => {
@@ -47,12 +47,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
   });
 
-  // 3. Expandable Roadmap Cards
-  const expandableNodes = document.querySelectorAll('.node-content.expandable');
-  expandableNodes.forEach(node => {
-    node.addEventListener('click', () => {
-      node.classList.toggle('expanded');
-      // Refresh GSAP ScrollTrigger after the CSS transition (0.5s) completes
+  // 3. Expandable Elements (Roadmap & Diagram)
+  const expandableItems = document.querySelectorAll('.node-content.expandable, .diagram-point.expandable');
+  expandableItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('expanded');
+      // Refresh GSAP ScrollTrigger after the CSS transition completes
       if (typeof ScrollTrigger !== 'undefined') {
         setTimeout(() => ScrollTrigger.refresh(), 500);
       }
