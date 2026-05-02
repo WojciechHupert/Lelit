@@ -151,7 +151,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const expandableItems = document.querySelectorAll('.node-content.expandable, .diagram-point.expandable');
   expandableItems.forEach(item => {
     item.addEventListener('click', () => {
-      item.classList.toggle('expanded');
+      // If it's a diagram point, expand ALL diagram points in that section
+      if (item.classList.contains('diagram-point')) {
+        const allDiagramPoints = document.querySelectorAll('.diagram-point.expandable');
+        const isExpanding = !item.classList.contains('expanded');
+        allDiagramPoints.forEach(p => {
+          if (isExpanding) p.classList.add('expanded');
+          else p.classList.remove('expanded');
+        });
+      } else {
+        // Normal toggle for roadmap items
+        item.classList.toggle('expanded');
+      }
+      
       // Refresh GSAP ScrollTrigger after the CSS transition completes
       if (typeof ScrollTrigger !== 'undefined') {
         setTimeout(() => ScrollTrigger.refresh(), 500);
