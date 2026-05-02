@@ -45,33 +45,33 @@
       <div class="features-grid">
         <div class="reveal feature-card">
           <div class="feature-number">01</div>
-          <h3>Conversation is the Mechanic</h3>
-          <p class="reveal">There are no quest markers, no objectives, no combat. You talk to people. They remember. The stories you find depend entirely on who you return to, what you ask, and how long you stay.</p>
+          <h3>Unrestricted Dialogue System</h3>
+          <p class="reveal">Built on a custom local LLM architecture, the primary interaction is natural language. There are no pre-scripted dialogue trees or restricted choices. Every response is generated in real-time based on the character's unique personality and history.</p>
         </div>
         <div class="reveal feature-card">
           <div class="feature-number">02</div>
-          <h3>Characters Who Know Each Other</h3>
-          <p class="reveal">Every resident has a private history, ongoing relationships, and things they have never told anyone. What you tell one person, another may already know. Information travels through the district the way gossip travels in a real town.</p>
+          <h3>Relational Character Memory</h3>
+          <p class="reveal">The district operates on a shared knowledge graph. Information given to one resident propagates through the social network based on their relationship proximity. Characters remember past interactions and adjust their sentiment dynamically over weeks of gameplay.</p>
         </div>
         <div class="reveal feature-card">
           <div class="feature-number">03</div>
-          <h3>The World Runs Without You</h3>
-          <p class="reveal">The day/night cycle continues when you leave. People go home. Things happen. When you return you are catching up, not starting over. The district has been alive in your absence.</p>
+          <h3>Asynchronous Simulation</h3>
+          <p class="reveal">A persistent world engine simulates the lives of residents even when the client is closed. Routines, social gatherings, and events trigger based on a real-time clock, ensuring the environment is in a different state every time you return.</p>
         </div>
         <div class="reveal feature-card">
           <div class="feature-number">04</div>
-          <h3>A Guide Who Tells You the Truth</h3>
-          <p class="reveal">Auggie is the only person in the district who knows what it really is. He is your anchor, your narrator, and the only person you can speak honestly with. He also has a secret of his own.</p>
+          <h3>Agentic Companion AI</h3>
+          <p class="reveal">The companion character, Auggie, acts as an autonomous agent. He possesses the ability to observe the simulation, reflect on events, and initiate contact based on his own internal heuristics and the player's established rapport.</p>
         </div>
         <div class="reveal feature-card">
           <div class="feature-number">05</div>
-          <h3>Follows You Out</h3>
-          <p class="reveal">Auggie messages you on Telegram when something happens. The organisation sends faxes. The boundary between the game and your day is deliberately thin. You do not need to be playing to be part of what is happening.</p>
+          <h3>Cross-Platform Persistence</h3>
+          <p class="reveal">Integrated API hooks allow the simulation to communicate outside the game environment via encrypted messaging (Telegram) and virtualized hardware (Faxes). The narrative state is maintained across multiple touchpoints in the player's daily routine.</p>
         </div>
         <div class="reveal feature-card">
           <div class="feature-number">06</div>
-          <h3>Completely Private</h3>
-          <p class="reveal">All AI runs locally on your machine. Your conversations never leave the game. No cloud, no subscription, no data sent anywhere. The district and everything said in it belongs to you.</p>
+          <h3>Local Inference Architecture</h3>
+          <p class="reveal">For maximum privacy and zero latency, the entire AI stack—including LLM and Text-to-Speech—runs locally on the user's hardware. No data is sent to the cloud, ensuring your private conversations remain entirely on-device.</p>
         </div>
       </div>
     </div>
@@ -82,30 +82,54 @@
     <h3 class="reveal">"A world that was already running before you arrived."</h3>
   </div>
 
-  <section>
+  <section class="world-carousel-container">
     <p class="reveal section-label">The Living World</p>
-    <h2 class="reveal">Day becomes night.<br><em>Things happen.</em></h2>
-    <div class="world-grid">
-      <div class="reveal world-cell">
-        <div class="world-cell-img">
-          <img src="assets/img/refined/Image%20Apr%2030,%202026,%2009_12_25%20PM.png" alt="Day" style="width:100%; height:100%; object-fit:cover; display:block; border-radius: 4px;" class="reveal">
+    <h2 class="reveal">Day becomes night.<br><em>The cycle of Lelit.</em></h2>
+    
+    <div class="main-carousel">
+      <div class="carousel-track">
+        <!-- Slide 1: Day -->
+        <div class="world-slide active">
+          <div class="slide-img">
+            <img src="assets/img/refined/Image%20Apr%2030,%202026,%2009_12_25%20PM.png" alt="Day in the District">
+          </div>
+          <div class="slide-content">
+            <h3>Morning & Day</h3>
+            <p>The district wakes. Caf&#xe9;s open their shutters, the market fills with the sound of trade, and residents follow their morning routines. It is a time of public life and social performance.</p>
+          </div>
         </div>
-        <h4>Day</h4>
-        <p class="reveal">The district moves. Caf&#xe9;s open. The market sets up. People have routines and strong opinions about them.</p>
+
+        <!-- Slide 2: Evening -->
+        <div class="world-slide">
+          <div class="slide-img">
+            <img src="assets/img/refined/Image%20Apr%2030,%202026,%2009_13_43%20PM.png" alt="Evening in the District">
+          </div>
+          <div class="slide-content">
+            <h3>The Golden Hour</h3>
+            <p>As the light shifts to warm amber, the piazza becomes the center of the world. Conversations grow longer, the pace slows, and the atmosphere of the district shifts toward the domestic and the shared.</p>
+          </div>
+        </div>
+
+        <!-- Slide 3: Night -->
+        <div class="world-slide">
+          <div class="slide-img">
+            <img src="assets/img/refined/Image%20Apr%2030,%202026,%2009_15_42%20PM.png" alt="Night in the District">
+          </div>
+          <div class="slide-content">
+            <h3>Late Night</h3>
+            <p>The streets quiet. Shadows lengthen. This is when the district is most itself—private, still, and reflective. It is also when Auggie is most likely to reach out from his post.</p>
+          </div>
+        </div>
       </div>
-      <div class="reveal world-cell">
-        <div class="world-cell-img">
-          <img src="assets/img/refined/Image%20Apr%2030,%202026,%2009_13_43%20PM.png" alt="Evening" style="width:100%; height:100%; object-fit:cover; display:block; border-radius: 4px;" class="reveal">
+
+      <div class="carousel-nav">
+        <button class="carousel-btn prev" onclick="moveWorldSlide(-1)">&#8592;</button>
+        <div class="carousel-pagination">
+          <span class="p-dot active" onclick="goWorldSlide(0)"></span>
+          <span class="p-dot" onclick="goWorldSlide(1)"></span>
+          <span class="p-dot" onclick="goWorldSlide(2)"></span>
         </div>
-        <h4>Evening</h4>
-        <p class="reveal">The piazza fills. The light goes warm. Stories that do not come out during the day come out now.</p>
-      </div>
-      <div class="reveal world-cell">
-        <div class="world-cell-img">
-          <img src="assets/img/refined/Image%20Apr%2030,%202026,%2009_15_42%20PM.png" alt="Night" style="width:100%; height:100%; object-fit:cover; display:block; border-radius: 4px;" class="reveal">
-        </div>
-        <h4>Night</h4>
-        <p class="reveal">The district quiets. Auggie stays up. This is when he writes you.</p>
+        <button class="carousel-btn next" onclick="moveWorldSlide(1)">&#8594;</button>
       </div>
     </div>
   </section>
@@ -219,8 +243,6 @@
 
   <div class="divider"></div>
 
-
-  <div class="divider"></div>
 
   <footer>
     <p style="opacity:.4;font-size:.7rem">Lelit Distrikt 2026 - Copyright: Wojciech Hupert // Shape Seeds - All rights reserved</p>

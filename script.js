@@ -153,3 +153,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
   }
 });
+
+// World Carousel (Experience Page)
+var currentWorldSlide = 0;
+var worldSlides = document.querySelectorAll('.world-slide');
+var worldTrack = document.querySelector('.carousel-track');
+var pDots = document.querySelectorAll('.p-dot');
+
+function showWorldSlide(n) {
+  if (worldSlides.length === 0) return;
+  
+  worldSlides[currentWorldSlide].classList.remove('active');
+  if(pDots[currentWorldSlide]) pDots[currentWorldSlide].classList.remove('active');
+  
+  currentWorldSlide = (n + worldSlides.length) % worldSlides.length;
+  
+  worldSlides[currentWorldSlide].classList.add('active');
+  if(pDots[currentWorldSlide]) pDots[currentWorldSlide].classList.add('active');
+  
+  if (worldTrack) {
+    worldTrack.style.transform = \	ranslateX(-\%)\;
+  }
+}
+
+function moveWorldSlide(dir) { showWorldSlide(currentWorldSlide + dir); }
+function goWorldSlide(n) { showWorldSlide(n); }
+
