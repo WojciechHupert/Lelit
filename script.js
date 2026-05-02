@@ -133,8 +133,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
   }
 
-  // 2. Magnetic Buttons
-  const magnets = document.querySelectorAll('.hero-cta-button, .cta-button');
+  // 2. Magnetic Buttons (Hero CTA only, not the mailto button for reliability)
+  const magnets = document.querySelectorAll('.hero-cta-button[href="experience.html"], .cta-button:not([href^="mailto"])');
   magnets.forEach(btn => {
     btn.addEventListener('mousemove', function(e) {
       const position = btn.getBoundingClientRect();
