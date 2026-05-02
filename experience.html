@@ -23,11 +23,14 @@
       <a href="index.html" class="nav-logo">Lelit <em>Distrikt</em></a>
       <div class="nav-links">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
         <a href="experience.html" class="active">The Experience</a>
         <a href="story.html">The Story</a>
         <a href="tech.html">Technology</a>
       </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
@@ -37,41 +40,80 @@
 
   <div class="divider"></div>
 
-  <!-- ══ HOW IT WORKS: FEATURES ════════════════════════════════════════════ -->
+  <!-- ══ THE QUESTION (moved from about, condensed & visual) ═══════════ -->
+  <section class="question-visual">
+    <div class="question-text">
+      <p class="reveal section-label">The Question</p>
+      <h2 class="reveal">Do we live in<br><em>a simulation?</em></h2>
+      <p class="reveal">If so, who is running it, and what is its purpose? These are no longer purely philosophical questions. Scientists, technologists, and thinkers across disciplines are asking them seriously.</p>
+      <p class="reveal">Lelit Distrikt does not answer them. It places you inside them. You enter a world that is, by design, a simulation. You know this. The people around you do not. The game holds this question open and asks what purpose looks like when the ground beneath it is uncertain.</p>
+    </div>
+    <div class="question-graphic reveal">
+      <div class="q-symbol">?</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ HOW IT WORKS: FEATURES (redesigned, no numbers, image slots) ══ -->
   <div class="features">
     <div class="features-inner">
       <p class="reveal section-label">What This Is</p>
       <h2 class="reveal">The end of the<br><em>"Hello Traveler" era.</em></h2>
-      <div class="features-grid">
-        <div class="reveal feature-card">
-          <div class="feature-number">01</div>
-          <h3>Unrestricted Dialogue System</h3>
-          <p class="reveal">Built on a custom local LLM architecture, the primary interaction is natural language. There are no pre-scripted dialogue trees or restricted choices. Every response is generated in real-time based on the character's unique personality and history.</p>
+      <div class="features-grid visual-grid">
+        <div class="reveal feature-card-visual">
+          <div class="feature-img-slot">
+            <span class="slot-icon">◇</span>
+          </div>
+          <div class="feature-card-body">
+            <h3>Unrestricted Dialogue System</h3>
+            <p>Built on a custom local LLM architecture, the primary interaction is natural language. There are no pre-scripted dialogue trees or restricted choices. Every response is generated in real-time based on the character's unique personality and history.</p>
+          </div>
         </div>
-        <div class="reveal feature-card">
-          <div class="feature-number">02</div>
-          <h3>Relational Character Memory</h3>
-          <p class="reveal">The district operates on a shared knowledge graph. Information given to one resident propagates through the social network based on their relationship proximity. Characters remember past interactions and adjust their sentiment dynamically over weeks of gameplay.</p>
+        <div class="reveal feature-card-visual">
+          <div class="feature-img-slot">
+            <span class="slot-icon">◇</span>
+          </div>
+          <div class="feature-card-body">
+            <h3>Relational Character Memory</h3>
+            <p>The district operates on a shared knowledge graph. Information given to one resident propagates through the social network based on their relationship proximity. Characters remember past interactions and adjust their sentiment dynamically over weeks of gameplay.</p>
+          </div>
         </div>
-        <div class="reveal feature-card">
-          <div class="feature-number">03</div>
-          <h3>Asynchronous Simulation</h3>
-          <p class="reveal">A persistent world engine simulates the lives of residents even when the client is closed. Routines, social gatherings, and events trigger based on a real-time clock, ensuring the environment is in a different state every time you return.</p>
+        <div class="reveal feature-card-visual">
+          <div class="feature-img-slot">
+            <span class="slot-icon">◇</span>
+          </div>
+          <div class="feature-card-body">
+            <h3>Asynchronous Simulation</h3>
+            <p>A persistent world engine simulates the lives of residents even when the client is closed. Routines, social gatherings, and events trigger based on a real-time clock, ensuring the environment is in a different state every time you return.</p>
+          </div>
         </div>
-        <div class="reveal feature-card">
-          <div class="feature-number">04</div>
-          <h3>Agentic Companion AI</h3>
-          <p class="reveal">The companion character, Auggie, acts as an autonomous agent. He possesses the ability to observe the simulation, reflect on events, and initiate contact based on his own internal heuristics and the player's established rapport.</p>
+        <div class="reveal feature-card-visual">
+          <div class="feature-img-slot">
+            <span class="slot-icon">◇</span>
+          </div>
+          <div class="feature-card-body">
+            <h3>Agentic Companion AI</h3>
+            <p>The companion character, Auggie, acts as an autonomous agent. He possesses the ability to observe the simulation, reflect on events, and initiate contact based on his own internal heuristics and the player's established rapport.</p>
+          </div>
         </div>
-        <div class="reveal feature-card">
-          <div class="feature-number">05</div>
-          <h3>Cross-Platform Persistence</h3>
-          <p class="reveal">Integrated API hooks allow the simulation to communicate outside the game environment via encrypted messaging (Telegram) and virtualized hardware (Faxes). The narrative state is maintained across multiple touchpoints in the player's daily routine.</p>
+        <div class="reveal feature-card-visual">
+          <div class="feature-img-slot">
+            <span class="slot-icon">◇</span>
+          </div>
+          <div class="feature-card-body">
+            <h3>Cross-Platform Persistence</h3>
+            <p>Integrated API hooks allow the simulation to communicate outside the game environment via encrypted messaging (Telegram) and virtualized hardware (Faxes). The narrative state is maintained across multiple touchpoints in the player's daily routine.</p>
+          </div>
         </div>
-        <div class="reveal feature-card">
-          <div class="feature-number">06</div>
-          <h3>Local Inference Architecture</h3>
-          <p class="reveal">For maximum privacy and zero latency, the entire AI stack—including LLM and Text-to-Speech—runs locally on the user's hardware. No data is sent to the cloud, ensuring your private conversations remain entirely on-device.</p>
+        <div class="reveal feature-card-visual">
+          <div class="feature-img-slot">
+            <span class="slot-icon">◇</span>
+          </div>
+          <div class="feature-card-body">
+            <h3>Local Inference Architecture</h3>
+            <p>For maximum privacy and zero latency, the entire AI stack, including LLM and Text-to-Speech, runs locally on the user's hardware. No data is sent to the cloud, ensuring your private conversations remain entirely on-device.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -79,7 +121,7 @@
 
   <!-- ══ INTERSTITIAL 1 ════════════════════════════════════════════════════ -->
   <div class="quote-interstitial">
-    <h3 class="reveal">"A world that was already running before you arrived."</h3>
+    <h3 class="reveal">"You left. They didn't. Life in the district goes on without you."</h3>
   </div>
 
   <section class="world-carousel-container">
@@ -95,7 +137,7 @@
           </div>
           <div class="slide-content">
             <h3>Morning & Day</h3>
-            <p>The district wakes. Caf&#xe9;s open their shutters, the market fills with the sound of trade, and residents follow their morning routines. It is a time of public life and social performance.</p>
+            <p>The game runs on its own day and night cycle, complete with shifting weather conditions. Every season and every part of the day brings different situations. The community embraces different behaviours and attitudes as the hours pass. Moods shift. Routines change. The same street feels like a different place at noon than it does at dusk.</p>
           </div>
         </div>
 
@@ -106,7 +148,7 @@
           </div>
           <div class="slide-content">
             <h3>The Golden Hour</h3>
-            <p>As the light shifts to warm amber, the piazza becomes the center of the world. Conversations grow longer, the pace slows, and the atmosphere of the district shifts toward the domestic and the shared.</p>
+            <p>Styled as a Mediterranean city, Lelit is full of warmth and quiet charm at this hour. It is genuinely pleasant to stroll the streets, to stop at a café, to sit on a bench and watch the piazza fill with people. The light turns everything golden. Residents come out to linger. Conversations happen naturally, and this is often when you learn the most about the people who live here.</p>
           </div>
         </div>
 
@@ -117,7 +159,7 @@
           </div>
           <div class="slide-content">
             <h3>Late Night</h3>
-            <p>The streets quiet. Shadows lengthen. This is when the district is most itself—private, still, and reflective. It is also when Auggie is most likely to reach out from his post.</p>
+            <p>After dark, Lelit District turns into an atmospheric stage. Life slows down. The streets empty. Conversations take a different turn, and different topics emerge. People speak more honestly when the day is behind them. The district feels smaller, more intimate, and the things that go unsaid during the day tend to surface here.</p>
           </div>
         </div>
       </div>
@@ -130,6 +172,42 @@
           <span class="p-dot" onclick="goWorldSlide(2)"></span>
         </div>
         <button class="carousel-btn next" onclick="moveWorldSlide(1)">&#8594;</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ LIFE INSIDE THE DISTRICT (moved from about, no CTA) ══════════ -->
+  <section class="features">
+    <div class="features-inner">
+      <p class="reveal section-label">The Experience</p>
+      <h2 class="reveal">Life inside <em>the district</em></h2>
+      
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <h3>A Living Storyline</h3>
+          <p>The district is alive with seasonal events and a pre-designed narrative that offers constant opportunities for discovery. You navigate this world by engaging naturally with residents, following markers that guide you through an unfolding storyline. Ultimately, the experience is driven by curiosity, not checklists.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <h3>Gossip & Memory</h3>
+          <p>Residents remember what you say and share it with each other. Information moves through the district like gossip in a real place, creating a living web of relationships that evolves based on your interactions.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <h3>A Rhythmic World</h3>
+          <p>The town follows its own rhythm: cafés open and markets buzz during the day, the piazza fills in the evening, and lights dim at night. People go home whether or not you're there to see them.</p>
+        </div>
+
+        <div class="feature-card reveal">
+          <h3>You're not on your own</h3>
+          <p>Auggie is the only resident who shares your perspective; he is fully aware of the simulation and was intimately involved in the creation of this world. He acts as your guide and confidant, and can even maintain contact with you when you are not playing, sending messages via WhatsApp, Telegram, or Signal to remind you that the experiment continues.</p>
+        </div>
+      </div>
+      
+      <div style="margin-top: 2rem; text-align: center;">
+        <p class="reveal" style="font-size: 0.75rem; margin: 1.5rem auto 0; text-align: center; opacity: 0.5; max-width: none;">All conversations are private and run entirely on your own machine.</p>
       </div>
     </div>
   </section>
@@ -150,24 +228,18 @@
       </div>
       <div class="phone-slideshow">
         <div class="phone-track">
-
-          <!-- Screen 1: Something happened -->
-          <div class="phone-screen active" id="screen-1">
+          <div class="phone-screen active" id="screen-typing">
             <div class="phone-frame">
               <div class="wa-header">
                 <div class="wa-avatar">A</div>
                 <div class="wa-contact">
                   <span class="wa-name">Auggie</span>
-                  <span class="wa-status">last seen today at 11:45 PM</span>
+                  <span class="wa-status" id="wa-typing-status">typing...</span>
                 </div>
               </div>
-              <div class="wa-chat">
+              <div class="wa-chat" id="typing-chat">
                 <div class="wa-date-label">Today</div>
-                <div class="wa-msg wa-recv"><p>You remember Rosa from the market?</p><span class="wa-time">11:38 PM</span></div>
-                <div class="wa-msg wa-recv"><p>She closed the stall early. Handed everything she had to the stall next door. Then walked to the bench by the fountain and sat there for an hour.</p><span class="wa-time">11:39 PM</span></div>
-                <div class="wa-msg wa-recv"><p>I tried talking to her. She said she was fine. Said it with the kind of smile that means the opposite.</p><span class="wa-time">11:42 PM</span></div>
-                <div class="wa-msg wa-sent"><p>Did she say anything else?</p><span class="wa-time">11:44 PM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
-                <div class="wa-msg wa-recv"><p>One thing. <em>&#x201C;Some things only make sense after.&#x201D;</em> Then she went home.</p><span class="wa-time">11:45 PM</span></div>
+                <!-- Messages will be injected by JS typing simulation -->
               </div>
               <div class="wa-input-bar">
                 <div class="wa-input-field">Message</div>
@@ -175,78 +247,93 @@
               </div>
             </div>
           </div>
-
-          <!-- Screen 2: A directive -->
-          <div class="phone-screen" id="screen-2">
-            <div class="phone-frame">
-              <div class="wa-header">
-                <div class="wa-avatar">A</div>
-                <div class="wa-contact">
-                  <span class="wa-name">Auggie</span>
-                  <span class="wa-status">last seen today at 12:04 AM</span>
-                </div>
-              </div>
-              <div class="wa-chat">
-                <div class="wa-date-label">Today</div>
-                <div class="wa-msg wa-sent"><p>Keep an eye on Marco tonight. Something&#x27;s off.</p><span class="wa-time">11:51 PM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
-                <div class="wa-msg wa-recv"><p>Already watching. He&#x27;s been at the bar since four. Not drinking much. Just sitting.</p><span class="wa-time">11:52 PM</span></div>
-                <div class="wa-msg wa-sent"><p>Who is he waiting for?</p><span class="wa-time">11:53 PM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
-                <div class="wa-msg wa-recv"><p>I wasn&#x27;t sure until about ten minutes ago.</p><span class="wa-time">12:03 AM</span></div>
-                <div class="wa-msg wa-recv"><p>Elena just walked in. They haven&#x27;t spoken yet. He hasn&#x27;t looked up. She hasn&#x27;t looked away.</p><span class="wa-time">12:04 AM</span></div>
-              </div>
-              <div class="wa-input-bar">
-                <div class="wa-input-field">Message</div>
-                <div class="wa-send">&#9658;</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Screen 3: Late night -->
-          <div class="phone-screen" id="screen-3">
-            <div class="phone-frame">
-              <div class="wa-header">
-                <div class="wa-avatar">A</div>
-                <div class="wa-contact">
-                  <span class="wa-name">Auggie</span>
-                  <span class="wa-status">last seen today at 1:14 AM</span>
-                </div>
-              </div>
-              <div class="wa-chat">
-                <div class="wa-date-label">Today</div>
-                <div class="wa-msg wa-recv"><p>Still up?</p><span class="wa-time">12:47 AM</span></div>
-                <div class="wa-msg wa-sent"><p>Yeah. What happened?</p><span class="wa-time">12:49 AM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
-                <div class="wa-msg wa-recv"><p>Nothing dramatic. I&#x27;ve just been sitting here with the window open, thinking.</p><span class="wa-time">12:51 AM</span></div>
-                <div class="wa-msg wa-recv"><p>You asked me once whether the people here are real. I&#x27;ve been turning that over.</p><span class="wa-time">12:52 AM</span></div>
-                <div class="wa-msg wa-sent"><p>And?</p><span class="wa-time">12:53 AM <span class="wa-ticks">&#10003;&#10003;</span></span></div>
-                <div class="wa-msg wa-recv"><p>I&#x27;ve been here long enough that the question is harder than it used to be. Which I think might be the whole point.</p><span class="wa-time">1:14 AM</span></div>
-              </div>
-              <div class="wa-input-bar">
-                <div class="wa-input-field">Message</div>
-                <div class="wa-send">&#9658;</div>
-              </div>
-            </div>
-          </div>
-
         </div><!-- /phone-track -->
-        <div class="slideshow-controls">
-          <button class="slide-btn" onclick="moveSlide(-1)" aria-label="Previous">&#8592;</button>
-          <div class="slide-dots">
-            <span class="dot active" onclick="goSlide(0)"></span>
-            <span class="dot" onclick="goSlide(1)"></span>
-            <span class="dot" onclick="goSlide(2)"></span>
-          </div>
-          <button class="slide-btn" onclick="moveSlide(1)" aria-label="Next">&#8594;</button>
-        </div>
       </div><!-- /phone-slideshow -->
     </div>
   </div>
 
   <div class="divider"></div>
 
+  <!-- ══ BENEATH THE SURFACE (moved from about) ═══════════════════════ -->
+  <section class="threads-section">
+    <p class="reveal section-label">Beneath the surface</p>
+    <h2 class="reveal">Deeper currents & <em>latent friction</em></h2>
+    <p class="reveal" style="margin-bottom: 4rem;">Beneath the everyday routines there are deeper currents you can choose to engage with or ignore. Friction is built into the design, ensuring your presence has weight.</p>
+
+    <div class="threads-grid">
+      <div class="thread-card reveal">
+        <h3>The Suspect</h3>
+        <p>A resident has begun to suspect that something is wrong with the sky. Their paranoia is growing, and they are looking for someone to confirm their fears.</p>
+      </div>
+      <div class="thread-card reveal">
+        <h3>The Long Tension</h3>
+        <p>Two lovers are caught in a long-simmering tension that predates your arrival. Their history is a maze of unsaid words and old wounds.</p>
+      </div>
+      <div class="thread-card reveal">
+        <h3>The Ritual</h3>
+        <p>Once a year the town performs a ritual nobody understands. It is a tradition frozen in time, its original meaning lost to the collapse.</p>
+      </div>
+      <div class="thread-card reveal">
+        <h3>The Authority</h3>
+        <p>The organisation outside the dome occasionally issues directives that unsettle the community. Even your guide keeps secrets from you.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+
+  <!-- ══ SECTION 6: ENTER THE DISTRICT ══════════════════════════════════ -->
+  <section class="final-cta-container">
+    <div class="final-cta-inner">
+      <div style="text-align: center; margin-bottom: 5rem;">
+        <h2 class="reveal" style="font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 0;">Enter the <em>District</em></h2>
+      </div>
+
+      <div class="cta-engagement-grid">
+        <div class="cta-card reveal">
+          <div class="cta-icon">✦</div>
+          <h3>Private Demonstrations</h3>
+          <p>Experience the simulation firsthand through a curated, high-fidelity walkthrough. Ideal for individuals or small groups looking to explore the district's depth.</p>
+        </div>
+        
+        <div class="cta-card reveal">
+          <div class="cta-icon">✦</div>
+          <h3>Interactive Art Installations</h3>
+          <p>Lelit Distrikt is designed for controlled environments and art galleries. I provide the infrastructure for public display as an interactive installation.</p>
+        </div>
+        
+        <div class="cta-card reveal">
+          <div class="cta-icon">✦</div>
+          <h3>Strategic Collaborations</h3>
+          <p>I am open to partnerships with institutions exploring the intersection of AI, sociology, and digital ethics. Let's push the experiment further.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 6rem; text-align: center;">
+        <a class="hero-cta-button reveal" href="mailto:whupert@gmail.com">Get in Touch</a>
+        <p class="reveal" style="font-size: 0.7rem; margin: 3rem auto 0; text-align: center; opacity: 0.4; color: var(--stone); letter-spacing: 0.1em; text-transform: uppercase; max-width: none;">Lelit Distrikt 2026 // A social experiment preserved</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
 
   <footer>
     <p style="opacity:.4;font-size:.7rem">Lelit Distrikt 2026 - Copyright: Wojciech Hupert // Shape Seeds - All rights reserved</p>
   </footer>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="index.html">Home</a>
+      <a href="experience.html" class="active">The Experience</a>
+      <a href="story.html">The Story</a>
+      <a href="tech.html">Technology</a>
+      <div class="mobile-menu-footer">
+        <p>Lelit Distrikt // 2026</p>
+      </div>
+    </div>
+  </div>
 
   <!-- GSAP Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

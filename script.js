@@ -1,6 +1,6 @@
-// Phone Slideshow
+// Phone Slideshow (legacy - kept for backwards compatibility)
 var currentSlide = 0;
-var screens = document.querySelectorAll('.phone-screen');
+var screens = document.querySelectorAll('.phone-screen:not(#screen-typing)');
 var dots = document.querySelectorAll('.dot');
 
 function showSlide(n) {
@@ -15,11 +15,111 @@ function showSlide(n) {
 function moveSlide(dir) { showSlide(currentSlide + dir); }
 function goSlide(n) { showSlide(n); }
 
+// ═══════════════════════════════════════════════════════════════
+// Typing Conversation Simulation (The Weight of Smoke)
+// ═══════════════════════════════════════════════════════════════
+var typingConversation = [
+  { from: 'recv', text: 'Still up?', time: '11:42 PM' },
+  { from: 'sent', text: 'Yeah. Quiet night?', time: '11:43 PM' },
+  { from: 'recv', text: 'Quieter than usual. I was sitting by the fountain and I started thinking about something.', time: '11:44 PM' },
+  { from: 'sent', text: 'What about?', time: '11:45 PM' },
+  { from: 'recv', text: 'You ever hear the story about Sir Walter Raleigh?', time: '11:46 PM' },
+  { from: 'sent', text: 'The guy with the cloak and the puddle?', time: '11:46 PM' },
+  { from: 'recv', text: 'That\'s him. He\'s also the one who brought tobacco to England. Apparently the Queen picked up the habit because of him.', time: '11:47 PM' },
+  { from: 'recv', text: 'One day he made a bet with her. Told her he could measure the weight of smoke.', time: '11:48 PM' },
+  { from: 'sent', text: 'That\'s impossible.', time: '11:48 PM' },
+  { from: 'recv', text: 'That\'s what she said. But he did it.', time: '11:49 PM' },
+  { from: 'recv', text: 'He weighed a cigar before he smoked it. Then he smoked it, carefully, and collected all the ash. Weighed the ash and the butt together. Subtracted that from the original weight.', time: '11:50 PM' },
+  { from: 'recv', text: 'The difference was the weight of the smoke.', time: '11:51 PM' },
+  { from: 'sent', text: 'That\'s actually kind of beautiful.', time: '11:52 PM' },
+  { from: 'recv', text: 'I think about that story a lot. Measuring something that everyone assumes can\'t be measured. Proving it has weight, even when it looks like nothing.', time: '11:53 PM' },
+  { from: 'sent', text: 'You\'re thinking about the people here.', time: '11:54 PM' },
+  { from: 'recv', text: 'I\'m always thinking about the people here.', time: '11:55 PM' },
+  { from: 'recv', text: 'Sometimes I wonder if that\'s what we\'re doing. Weighing something no one thinks can be weighed. Their ordinary days. Their small kindnesses. The conversations no one writes down.', time: '11:57 PM' },
+  { from: 'sent', text: 'And the difference is what matters.', time: '11:58 PM' },
+  { from: 'recv', text: 'Yeah. The difference is the whole point.', time: '11:59 PM' },
+];
+
+var typingStarted = false;
+var typingMsgIndex = 0;
+
+function startTypingConversation() {
+  var chatContainer = document.getElementById('typing-chat');
+  var statusEl = document.getElementById('wa-typing-status');
+  if (!chatContainer || typingStarted) return;
+  typingStarted = true;
+  typingMsgIndex = 0;
+  showNextTypingMessage(chatContainer, statusEl);
+}
+
+function showNextTypingMessage(chatContainer, statusEl) {
+  if (typingMsgIndex >= typingConversation.length) {
+    if (statusEl) statusEl.textContent = 'last seen today at 11:59 PM';
+    return;
+  }
+
+  var msg = typingConversation[typingMsgIndex];
+  var isRecv = msg.from === 'recv';
+
+  // Show typing indicator first
+  if (isRecv && statusEl) {
+    statusEl.textContent = 'typing...';
+  }
+  
+  var typingDelay = isRecv ? 800 + Math.random() * 1200 + (msg.text.length * 15) : 400 + Math.random() * 600;
+
+  // Create and show typing dots for received messages
+  var typingDots = null;
+  if (isRecv) {
+    typingDots = document.createElement('div');
+    typingDots.className = 'wa-msg wa-recv';
+    typingDots.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+    chatContainer.appendChild(typingDots);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  setTimeout(function() {
+    // Remove typing dots
+    if (typingDots) {
+      typingDots.remove();
+    }
+    
+    // Create the actual message
+    var msgEl = document.createElement('div');
+    msgEl.className = 'wa-msg ' + (isRecv ? 'wa-recv' : 'wa-sent') + ' chat-msg-animated';
+    
+    var timeHtml = isRecv 
+      ? '<span class="wa-time">' + msg.time + '</span>'
+      : '<span class="wa-time">' + msg.time + ' <span class="wa-ticks">&#10003;&#10003;</span></span>';
+    
+    msgEl.innerHTML = '<p>' + msg.text + '</p>' + timeHtml;
+    chatContainer.appendChild(msgEl);
+    
+    // Trigger animation
+    requestAnimationFrame(function() {
+      msgEl.classList.add('visible');
+    });
+
+    // Update status
+    if (statusEl) {
+      statusEl.textContent = isRecv ? 'online' : 'last seen today at ' + msg.time;
+    }
+
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    
+    typingMsgIndex++;
+    
+    // Delay before next message
+    var nextDelay = 600 + Math.random() * 800;
+    showNextTypingMessage(chatContainer, statusEl);
+  }, typingDelay);
+}
+
 // Wait for DOM to load
 document.addEventListener("DOMContentLoaded", (event) => {
   // 1. Custom Cursor
   const cursor = document.querySelector('.custom-cursor');
-  const hoverElements = document.querySelectorAll('a, button, .slide-btn, .dot, .wa-send, .hero-cta, .cta-button, .phone-frame, .img-ph, .diagram-point');
+  const hoverElements = document.querySelectorAll('a, button, .slide-btn, .dot, .wa-send, .hero-cta, .cta-button, .phone-frame, .img-ph, .diagram-point, .nav-toggle');
   
   if (cursor) {
     document.addEventListener('mousemove', (e) => {
@@ -151,6 +251,40 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
       });
     });
+
+    // Typing conversation - trigger when phone section scrolls into view
+    if (document.getElementById('typing-chat')) {
+      ScrollTrigger.create({
+        trigger: '.comms-section',
+        start: 'top 80%',
+        onEnter: function() {
+          startTypingConversation();
+        },
+        once: true
+      });
+    }
+
+    // 5. Mobile Menu Toggle
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-menu-inner a');
+
+    if (navToggle && mobileMenu) {
+      navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        // Prevent scrolling when menu is open
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      });
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          navToggle.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+    }
   }
 });
 
@@ -178,4 +312,3 @@ function showWorldSlide(n) {
 
 function moveWorldSlide(dir) { showWorldSlide(currentWorldSlide + dir); }
 function goWorldSlide(n) { showWorldSlide(n); }
-

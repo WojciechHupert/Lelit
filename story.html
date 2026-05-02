@@ -23,11 +23,14 @@
       <a href="index.html" class="nav-logo">Lelit <em>Distrikt</em></a>
       <div class="nav-links">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
         <a href="experience.html">The Experience</a>
         <a href="story.html" class="active">The Story</a>
         <a href="tech.html">Technology</a>
       </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
@@ -37,22 +40,48 @@
 
   <div class="divider"></div>
 
+  <!-- ══ STORY AND RELATIONSHIPS (moved from index.html) ═════════════ -->
+  <section class="threads-section">
+    <h2 class="reveal">Story and <em>relationships</em></h2>
+    <p class="reveal" style="margin-bottom: 4rem;">Narrative in Lelit Distrikt is not a checklist of tasks; it is a web of hidden lives and unresolved tensions that you uncover over time.</p>
+    <div class="threads-grid">
+      <div class="thread-card reveal">
+        <h3>Hidden Lives</h3>
+        <p>Every resident has a secret, a philosophy, and a history that predates your arrival. Their lives continue even when you aren't watching.</p>
+      </div>
+      <div class="thread-card reveal">
+        <h3>Character Webs</h3>
+        <p>Information moves like gossip. What you say to one person might be reflected back to you by another, days later, in a completely different context.</p>
+      </div>
+      <div class="thread-card reveal">
+        <h3>Unresolved Tensions</h3>
+        <p>You step into the middle of long-simmering conflicts and quiet loves. You don't "fix" them; you navigate them, and your presence adds weight to the outcome.</p>
+      </div>
+      <div class="thread-card reveal">
+        <h3>Returning to People</h3>
+        <p>The most important moments aren't plot beats. They are conversations about small things, at the right time, with someone who remembers you were there.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- ══ AUGGIE ═════════════════════════════════════════════════════════════ -->
   <section class="auggie-section">
-    <p class="reveal section-label">Your Guide</p>
+    <p class="reveal friend-label">Your friend on the inside</p>
     <h2 class="reveal">Meet <em>Auggie</em>:<br><span style="font-size:clamp(1.5rem, 3vw, 2.2rem); color: var(--stone);">The Neighborhood Philosopher</span></h2>
     <div class="auggie-float">
       <img src="assets/img/refined/auggie.png" alt="Auggie" style="width:100%; display:block; border-radius: 4px;" class="reveal">
     </div>
     <p class="reveal">He is the first person you meet. He is the only one, besides you, who knows the dome is a simulation. He helped design what the people inside now call home. He lives among them. He knows they do not know. This has complicated him in ways he does not often speak about directly.</p>
-    <blockquote class="auggie-quote">&#x201C;The truth is a heavy thing to carry alone. I&#x27;ve been holding it for a long time, watching them live their perfect, fragile days. They don&#x27;t need to know the sky is a projection&#x2014;they just need to know they matter.&#x201D;</blockquote>
-    <p class="reveal">He carries within him a rare and unusual combination: the wisdom of someone who has watched people closely for a very long time, and the restlessness of a mind that cannot stop asking why. He has read everything. He has forgotten nothing. He quotes philosophers and poets the way other people quote the weather, and he means it. What makes him truly singular is his ability to tell a story. He can take an ordinary moment and hold it up to the light until it reveals something you did not know was there.</p>
+    <blockquote class="auggie-quote">&#x201C;I've been here long enough that the line between watching and caring stopped meaning much. They don't need to know about the sky. They just need someone who remembers why it matters that they're here at all.&#x201D;</blockquote>
+    <p class="reveal">He carries a rare combination: the patience of someone who has watched people closely for years, and a restless mind that cannot stop questioning the purpose of it all. He has read everything. He has forgotten nothing. He quotes philosophers and poets the way other people talk about the weather, and he means every word. What makes him singular is his ability to find significance in the ordinary. He can take a mundane moment and hold it up to the light until it reveals something you never noticed before.</p>
     <p class="reveal">He has been here long enough to care about the residents in ways that were not part of the plan. He has made decisions without telling anyone. At some point you will have to decide whether to trust him completely.</p>
   </section>
 
-  <!-- ══ INTERSTITIAL 3 ════════════════════════════════════════════════════ -->
+  <!-- ══ INTERSTITIAL ════════════════════════════════════════════════════ -->
   <div class="quote-interstitial">
-    <h3 class="reveal">"Six lives. None of them have endings yet."</h3>
+    <h3 class="reveal">"Six stories are unfolding right now. Your choices will shape how each one ends."</h3>
   </div>
 
   <div class="divider"></div>
@@ -61,7 +90,7 @@
   <section class="cast-section">
     <p class="reveal section-label">The Community</p>
     <h2 class="reveal">A town where every<br><em>person is worth knowing</em></h2>
-    <p class="reveal">Six to eight fully authored characters. Each has a private history, a secret, a philosophy, and relationships with every other person in the district that existed before the player arrived. The ensemble draws from the model of <em>Northern Exposure</em>: a small town where every person is vivid enough to carry an episode.</p>
+    <p class="reveal">Six to eight fully realised characters inhabit the district. Each one has a private history, a secret they guard, a worldview that shapes every conversation, and long-standing relationships with everyone else in the community. These connections existed before you arrived. Every character is someone worth getting to know, someone whose story will surprise you. And every one of them influences the narrative with you at the centre of it.</p>
     <div class="cast-grid">
       <div class="reveal cast-card">
         <div class="cast-portrait"><img src="assets/portraits/patriarch_portrait_1777575299653.png" alt="The Patriarch" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
@@ -73,15 +102,15 @@
       </div>
       <div class="reveal cast-card">
         <div class="cast-portrait"><img src="assets/portraits/philosopher_portrait_1777575330990.png" alt="The Truth-Teller" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
-        <div class="cast-card-body"><p class="reveal cast-role">The Philosopher-Fool</p><h3>The Truth-Teller</h3><p class="reveal">He says things that sound absurd until you walk home with them. The district&#x27;s unofficial interpreter of its own contradictions.</p></div>
+        <div class="cast-card-body"><p class="reveal cast-role">The Philosopher-Fool</p><h3>The Truth-Teller</h3><p class="reveal">He says things that sound absurd until you walk home with them. The district's unofficial interpreter of its own contradictions.</p></div>
       </div>
       <div class="reveal cast-card">
         <div class="cast-portrait"><img src="assets/portraits/dangerous_portrait_1777575345439.png" alt="The Most Dangerous Resident" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
         <div class="cast-card-body"><p class="reveal cast-role">The One Who Suspects</p><h3>The Most Dangerous Resident</h3><p class="reveal">She senses something is wrong without being able to name it. She is not close to the truth. She is moving toward it.</p></div>
       </div>
       <div class="reveal cast-card">
-        <div class="cast-portrait"><img src="assets/portraits/archivist_portrait_1777575362056.png" alt="The District&#x27;s Archivist" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
-        <div class="cast-card-body"><p class="reveal cast-role">The Keeper of Memory</p><h3>The District&#x27;s Archivist</h3><p class="reveal">He knows everyone&#x27;s history. He has been here long enough to become the town&#x27;s unofficial memory, which means he knows where the contradictions are.</p></div>
+        <div class="cast-portrait"><img src="assets/portraits/archivist_portrait_1777575362056.png" alt="The District's Archivist" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
+        <div class="cast-card-body"><p class="reveal cast-role">The Keeper of Memory</p><h3>The District's Archivist</h3><p class="reveal">He knows everyone's history. He has been here long enough to become the town's unofficial memory, which means he knows where the contradictions are.</p></div>
       </div>
       <div class="reveal cast-card">
         <div class="cast-portrait"><img src="assets/portraits/romantic_portrait_1777575374201.png" alt="The One Who Pulls You In" style="width:100%; display:block; filter: saturate(0.8) contrast(1.1); border-bottom: 2px solid var(--terracotta);" class="reveal"><div class="placeholder-overlay">PLACEHOLDER IMAGE</div></div>
@@ -92,18 +121,96 @@
 
   <div class="divider"></div>
 
-  <!-- ══ STORY THREADS ══════════════════════════════════════════════════════ -->
+  <!-- ══ STORY CHAPTERS (redesigned as DLC/seasons) ══════════════════════ -->
   <section class="threads-section">
     <p class="reveal section-label">The Story</p>
-    <h2 class="reveal">Stories that unfold<br><em>across real time</em></h2>
-    <p class="reveal">Lelit Distrikt does not have missions or objectives. It has people: and the ongoing lives of people who do not know they are being observed. These threads develop over sessions, across days and weeks, like episodes of a serialised drama.</p>
-    <div class="threads-grid">
-      <div class="reveal thread-card"><h3>The One Who Suspects</h3><p class="reveal">A resident has begun to notice inconsistencies. The sky. A memory that does not quite connect. The horizon that never arrives. She is not close to the truth, but she is moving toward it. The player must decide whether to let it unfold.</p></div>
-      <div class="reveal thread-card"><h3>The Love Story</h3><p class="reveal">Two residents with a history that predates the player&#x27;s arrival. The player learns it in fragments: from each of them separately, from others, from Auggie late at night. The player can influence the outcome. They are never told what the right outcome is.</p></div>
-      <div class="reveal thread-card"><h3>The Organisation&#x27;s Real Agenda</h3><p class="reveal">A directive arrives that seems reasonable. Over time the player learns it is not. What the organisation wants from the simulation is not what they said. Auggie may already know. He is deciding whether to say.</p></div>
-      <div class="reveal thread-card"><h3>The Memory That Doesn&#x27;t Fit</h3><p class="reveal">A resident tells the player something about their past. Another corroborates a different version. The histories inside the Enclosure contain contradictions. Whether this is error, design, or simply the way memory works is never directly answered.</p></div>
-      <div class="reveal thread-card"><h3>The Ritual</h3><p class="reveal">The district marks something every year. The residents participate without knowing why. It is embedded in the simulation&#x27;s design. The player eventually discovers what is actually being commemorated. This is the thread that carries the deepest weight.</p></div>
-      <div class="reveal thread-card"><h3>Auggie&#x27;s Secret</h3><p class="reveal">He is not neutral. He has formed attachments he should not have. He has made decisions without consulting anyone. At some point the player must decide whether to trust him completely. There is no version of this that is uncomplicated.</p></div>
+    <h2 class="reveal">Chapters that unfold<br><em>across real time</em></h2>
+    <p class="reveal">Lelit Distrikt tells its story in chapters. Each one introduces a shift in the life of the district: new tensions, new revelations, new reasons to come back. The narrative continues to develop, and there is always something unfolding. These are some of the chapters the player will experience.</p>
+    <div class="chapters-grid">
+      <div class="reveal chapter-card">
+        <div class="chapter-badge">Chapter I</div>
+        <div class="chapter-body">
+          <h3>Cracks in the Sky</h3>
+          <p>A resident starts asking questions nobody wants to hear. Small inconsistencies pile up. Something about the horizon doesn't sit right with her, and she is looking for someone willing to listen. You are that someone.</p>
+          <div class="chapter-status">Available at launch</div>
+        </div>
+      </div>
+      <div class="reveal chapter-card">
+        <div class="chapter-badge">Chapter II</div>
+        <div class="chapter-body">
+          <h3>The Unfinished Letter</h3>
+          <p>Two residents share a history that the rest of the district only whispers about. You piece it together from both sides, from gossip, from Auggie late at night. What happened between them is still happening. Your presence changes the equation.</p>
+          <div class="chapter-status">Available at launch</div>
+        </div>
+      </div>
+      <div class="reveal chapter-card">
+        <div class="chapter-badge">Chapter III</div>
+        <div class="chapter-body">
+          <h3>The Directive</h3>
+          <p>A message arrives from the organisation. It sounds routine. It is not. Over the following weeks, the true cost of their request becomes clear. Auggie may already know what they're really after. He is deciding whether to tell you.</p>
+          <div class="chapter-status">Available at launch</div>
+        </div>
+      </div>
+      <div class="reveal chapter-card">
+        <div class="chapter-badge">Chapter IV</div>
+        <div class="chapter-body">
+          <h3>Two Versions of the Same Day</h3>
+          <p>A resident tells you something about their past. Another resident remembers it differently. The histories inside the dome contain contradictions. Whether this is error, design, or simply the way memory works is something only you can decide.</p>
+          <div class="chapter-status">Season one</div>
+        </div>
+      </div>
+      <div class="reveal chapter-card">
+        <div class="chapter-badge">Chapter V</div>
+        <div class="chapter-body">
+          <h3>The Day They Remember</h3>
+          <p>Once a year the district marks an event nobody fully understands. The ritual is embedded deep in the simulation's architecture. When you discover what is actually being commemorated, it changes how you see everything that came before.</p>
+          <div class="chapter-status">Season one</div>
+        </div>
+      </div>
+      <div class="reveal chapter-card">
+        <div class="chapter-badge">Chapter VI</div>
+        <div class="chapter-body">
+          <h3>The Confession</h3>
+          <p>Auggie is not neutral. He has formed attachments he was never supposed to form. He has made decisions without consulting anyone. The moment comes when you must decide whether to trust him completely. There is no clean version of this.</p>
+          <div class="chapter-status">Season one</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ SECTION 6: ENTER THE DISTRICT ══════════════════════════════════ -->
+  <section class="final-cta-container">
+    <div class="final-cta-inner">
+      <div style="text-align: center; margin-bottom: 5rem;">
+        <h2 class="reveal" style="font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 0;">Enter the <em>District</em></h2>
+      </div>
+
+      <div class="cta-engagement-grid">
+        <div class="cta-card reveal">
+          <div class="cta-icon">✦</div>
+          <h3>Private Demonstrations</h3>
+          <p>Experience the simulation firsthand through a curated, high-fidelity walkthrough. Ideal for individuals or small groups looking to explore the district's depth.</p>
+        </div>
+        
+        <div class="cta-card reveal">
+          <div class="cta-icon">✦</div>
+          <h3>Interactive Art Installations</h3>
+          <p>Lelit Distrikt is designed for controlled environments and art galleries. I provide the infrastructure for public display as an interactive installation.</p>
+        </div>
+        
+        <div class="cta-card reveal">
+          <div class="cta-icon">✦</div>
+          <h3>Strategic Collaborations</h3>
+          <p>I am open to partnerships with institutions exploring the intersection of AI, sociology, and digital ethics. Let's push the experiment further.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 6rem; text-align: center;">
+        <a class="hero-cta-button reveal" href="mailto:whupert@gmail.com">Get in Touch</a>
+        <p class="reveal" style="font-size: 0.7rem; margin: 3rem auto 0; text-align: center; opacity: 0.4; color: var(--stone); letter-spacing: 0.1em; text-transform: uppercase; max-width: none;">Lelit Distrikt 2026 // A social experiment preserved</p>
+      </div>
     </div>
   </section>
 
@@ -112,6 +219,18 @@
   <footer>
     <p style="opacity:.4;font-size:.7rem">Lelit Distrikt 2026 - Copyright: Wojciech Hupert // Shape Seeds - All rights reserved</p>
   </footer>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="index.html">Home</a>
+      <a href="experience.html">The Experience</a>
+      <a href="story.html" class="active">The Story</a>
+      <a href="tech.html">Technology</a>
+      <div class="mobile-menu-footer">
+        <p>Lelit Distrikt // 2026</p>
+      </div>
+    </div>
+  </div>
 
   <!-- GSAP Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
