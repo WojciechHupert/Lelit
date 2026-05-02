@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   // 2. Magnetic Buttons
-  const magnets = document.querySelectorAll('.hero-cta, .cta-button');
+  const magnets = document.querySelectorAll('.hero-cta-button, .cta-button');
   magnets.forEach(btn => {
     btn.addEventListener('mousemove', function(e) {
       const position = btn.getBoundingClientRect();
@@ -82,22 +82,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
 
     // Parallax on Hero elements
-    if (document.querySelector('.hero h1')) {
-      gsap.to('.hero h1', {
-        y: -50,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: true
-        }
-      });
-    }
-    
-    if (document.querySelector('.hero-subtitle')) {
-      gsap.to('.hero-subtitle', {
-        y: -30,
+    if (document.querySelector('.hero-split-layout')) {
+      gsap.to('.hero-split-layout', {
+        y: -100,
         ease: "none",
         scrollTrigger: {
           trigger: ".hero",
@@ -150,5 +137,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
         });
       });
     }
+
+    // Cinematic Zoom for Circle Image
+    gsap.utils.toArray('.cinematic-zoom').forEach(img => {
+      gsap.to(img, {
+        scale: 1.3,
+        duration: 20,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: img,
+          start: "top 80%",
+          toggleActions: "play none none none" // Play once, don't repeat or reverse
+        }
+      });
+    });
   }
 });
